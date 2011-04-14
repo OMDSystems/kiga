@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svnroot/kiga/!svn/ver/39/conf
+END
+routes
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svnroot/kiga/!svn/ver/1/conf/routes
+END
+application.conf
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/kiga/!svn/ver/39/conf/application.conf
+END
+messages
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svnroot/kiga/!svn/ver/1/conf/messages
+END

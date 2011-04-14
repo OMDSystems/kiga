@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/kiga/!svn/ver/41/app/businessLogic/customerComponent
+END
+ChildEntity.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/kiga/!svn/ver/36/app/businessLogic/customerComponent/ChildEntity.java
+END
+InfoAndStatisticsUseCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/kiga/!svn/ver/34/app/businessLogic/customerComponent/InfoAndStatisticsUseCase.java
+END
+CustomerComponent.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/kiga/!svn/ver/41/app/businessLogic/customerComponent/CustomerComponent.java
+END
+CRUDUseCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/kiga/!svn/ver/33/app/businessLogic/customerComponent/CRUDUseCase.java
+END
+IChildData.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/kiga/!svn/ver/33/app/businessLogic/customerComponent/IChildData.java
+END
+ICustomermanagement.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/kiga/!svn/ver/41/app/businessLogic/customerComponent/ICustomermanagement.java
+END

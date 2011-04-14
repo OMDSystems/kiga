@@ -1,0 +1,20 @@
+package fassade;
+
+import fassade.SuperKiGaController;
+import play.*;
+import play.mvc.*;
+
+import java.util.*;
+
+
+public class Application extends SuperKiGaController {
+
+    public Application(){
+        super();
+    }
+
+    public static void index() {
+        render();
+    }
+
+}

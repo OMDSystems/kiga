@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract
+END
+ContractException.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/ContractException.html
+END
+Contract.html
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/Contract.html
+END
+InvariantFailedException.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/InvariantFailedException.html
+END
+PostconditionFailedException.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/PostconditionFailedException.html
+END
+Requirement.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/Requirement.html
+END
+PreconditionFailedException.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/PreconditionFailedException.html
+END
+package-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/package-frame.html
+END
+package-use.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/package-use.html
+END
+package-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/package-summary.html
+END
+Assertion.html
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/Assertion.html
+END
+package-tree.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/kiga/!svn/ver/9/lib/OMContractjavadoc/OMContract/package-tree.html
+END

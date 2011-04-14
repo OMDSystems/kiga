@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/kiga/!svn/ver/43/app/businessLogic/groupComponent
+END
+GroupComponent.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/kiga/!svn/ver/42/app/businessLogic/groupComponent/GroupComponent.java
+END
+IGroupData.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/kiga/!svn/ver/41/app/businessLogic/groupComponent/IGroupData.java
+END
+IGroupmanagement.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/kiga/!svn/ver/42/app/businessLogic/groupComponent/IGroupmanagement.java
+END
+CRUDUseCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/kiga/!svn/ver/43/app/businessLogic/groupComponent/CRUDUseCase.java
+END
+GroupEntity.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/kiga/!svn/ver/41/app/businessLogic/groupComponent/GroupEntity.java
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svnroot/kiga/!svn/ver/43/test
+END
+BasicTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/kiga/!svn/ver/1/test/BasicTest.java
+END
+ApplicationTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svnroot/kiga/!svn/ver/1/test/ApplicationTest.java
+END
+Application.test.html
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/kiga/!svn/ver/1/test/Application.test.html
+END
+data.yml
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svnroot/kiga/!svn/ver/1/test/data.yml
+END
