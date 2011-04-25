@@ -1,0 +1,48 @@
+25 Apr 2011 11:46:53,598 INFO  ~ Starting C:\Projekte\Java\play-1.1\kiga
+25 Apr 2011 11:46:54,451 WARN  ~ You're running Play! in DEV mode
+25 Apr 2011 11:46:54,707 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+25 Apr 2011 11:47:04,825 WARN  ~ Ignoring {id} (static params must be specified as key:'value',...)
+25 Apr 2011 11:47:05,883 INFO  ~ Connected to jdbc:hsqldb:mem:playembed
+25 Apr 2011 11:47:07,068 INFO  ~ Application 'SuperKiGaV' is now started !
+25 Apr 2011 11:47:10,671 ERROR ~ 
+
+@6688ba3g2
+favicon.ico.index action not found
+
+Action not found
+Action favicon.ico.index could not be found. Error raised is Controller controllers.favicon.ico not found
+
+play.exceptions.ActionNotFoundException: Action favicon.ico.index not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:436)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:76)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.favicon.ico not found
+	... 3 more
+25 Apr 2011 11:47:11,409 ERROR ~ 
+
+@6688ba3g3
+favicon.ico.index action not found
+
+Action not found
+Action favicon.ico.index could not be found. Error raised is Controller controllers.favicon.ico not found
+
+play.exceptions.ActionNotFoundException: Action favicon.ico.index not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:436)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:76)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.favicon.ico not found
+	... 3 more
+25 Apr 2011 11:47:11,434 ERROR ~ 
+
+@6688ba3g4
+favicon.ico.index action not found
+
+Action not found
+Action favicon.ico.index could not be found. Error raised is Controller controllers.favicon.ico not found
+
+play.exceptions.ActionNotFoundException: Action favicon.ico.index not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:436)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:76)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.favicon.ico not found
+	... 3 more
