@@ -46,5 +46,13 @@ public interface IChildData {
      * @return Collection with technical ids
      */
     public Collection<Long> getGroups();
+    
+    /**
+     * Returns technical id of child
+     * @return technical id
+     */
+    public long getChildId();
+
+
 
 }

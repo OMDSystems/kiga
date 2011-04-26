@@ -6,6 +6,7 @@ import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * This Usecase has methods for advanced information and statistics
@@ -41,7 +42,7 @@ class InfoAndStatisticsUseCase {
     }
 
     Collection<IChildData> getAllChildrenForGroup(long groupId) {
-        Collection<IChildData> result = new ArrayList<IChildData>();
+        Collection<IChildData> result = new LinkedList<IChildData>();
         for (IChildData child : crudUseCase.getAllChildren()) {
             if (child.getGroups().contains(groupId)) {
                 result.add(child);

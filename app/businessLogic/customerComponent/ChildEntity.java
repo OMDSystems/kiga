@@ -1,12 +1,20 @@
 package businessLogic.customerComponent;
 
+import businessLogic.groupComponent.GroupEntity;
 import businessLogic.zeroType.AdressType;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
+import javax.persistence.PrimaryKeyJoinColumn;
 import play.db.jpa.Model;
 
 /**
@@ -26,9 +34,19 @@ class ChildEntity extends Model implements IChildData{
     
     private AdressType adress;
 
-    @ElementCollection  // use default table (PERSON_NICKNAMES)
-    @Column(name="groups", length=50)
-    private List<Long> groups;
+
+//    @MapsId("groupEntity")
+//    @JoinColumn(name="group_fk", referencedColumnName="id")
+    @ManyToMany(
+        targetEntity=GroupEntity.class,
+        cascade={CascadeType.ALL}
+    )
+    @JoinTable(
+        name="CHILD_GROUP",
+        joinColumns=@JoinColumn(name="CHILD_ID"),
+        inverseJoinColumns=@JoinColumn(name="GROUP_ID")
+    )
+    private Collection<Long> groups;
 
     /**
      * Creates a new child
@@ -87,7 +105,7 @@ class ChildEntity extends Model implements IChildData{
         this.name = name;
     }
 
-    public List<Long> getGroups() {
+    public Collection<Long> getGroups() {
         return groups;
     }
 
@@ -110,13 +128,13 @@ class ChildEntity extends Model implements IChildData{
         if ((this.familyName == null) ? (other.familyName != null) : !this.familyName.equals(other.familyName)) {
             return false;
         }
-        if (this.dateOfBirth != other.dateOfBirth && (this.dateOfBirth == null || !this.dateOfBirth.equals(other.dateOfBirth))) {
-            return false;
-        }
         if ((this.allergies == null) ? (other.allergies != null) : !this.allergies.equals(other.allergies)) {
             return false;
         }
         if (this.adress != other.adress && (this.adress == null || !this.adress.equals(other.adress))) {
+            return false;
+        }
+        if (this.dateOfBirth != other.dateOfBirth && (this.dateOfBirth == null || !this.dateOfBirth.equals(other.dateOfBirth))) {
             return false;
         }
         if (this.groups != other.groups && (this.groups == null || !this.groups.equals(other.groups))) {
@@ -136,6 +154,12 @@ class ChildEntity extends Model implements IChildData{
         hash = 83 * hash + (this.groups != null ? this.groups.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public long getChildId() {
+        return this.getId();
+    }
+
     
     
 
