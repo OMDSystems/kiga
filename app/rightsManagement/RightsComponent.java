@@ -1,5 +1,9 @@
 package rightsManagement;
 
+import play.libs.WS;
+import play.libs.WS.HttpResponse;
+import play.libs.WS.WSRequest;
+
 /**
  * This component realizes rights management as claimed by Hamburg
  * @author Marvin

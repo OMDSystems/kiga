@@ -81,8 +81,8 @@ public class CustomerComponent implements ICustomermanagement{
 //    }
 
     public Collection<IChildData> getAllChildrenForGroup(long groupId) {
-        throw new UnsupportedOperationException("Not supported yet.");
-//        return infoAndStatisticsUseCase.getAllChildrenForGroup(groupId);
+//        throw new UnsupportedOperationException("Not supported yet.");
+        return infoAndStatisticsUseCase.getAllChildrenForGroup(groupId);
     }
 
 

@@ -4,6 +4,7 @@ package businessLogic.customerComponent;
 import businessLogic.groupComponent.IGroupmanagement;
 import businessLogic.zeroType.ChildNotFoundException;
 import businessLogic.zeroType.GroupNotFoundException;
+import java.util.Collection;
 import java.util.List;
 import businessLogic.zeroType.AdressType;
 import businessLogic.zeroType.GroupType;
@@ -177,8 +178,12 @@ public class CustomerComponentTest extends UnitTest {
 //    }
     
     @Test
-    public void testGetAllChildrenForGroup() {
-        fail("implement addToGroup to be able to generate testdata");
+    public void testGetAllChildrenForGroup() throws TechnicalProblemException {
+        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
+        Collection<IChildData> allChildrenForGroup = customermanagement.getAllChildrenForGroup(createGroup);
+
+        assertEquals(0,allChildrenForGroup.size());
     }
     
 
