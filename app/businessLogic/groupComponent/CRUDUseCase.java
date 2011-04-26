@@ -31,26 +31,32 @@ public class CRUDUseCase {
         return usecase;
     }
 
-    long createEmptyGroup(GroupType groupType, WeekdayType weekdayType, double grouptype, String weekdaytype, long room) {
-        //Todo: OW get room by Id und add to room
-        GroupEntity group = new GroupEntity(groupType, weekdayType, grouptype, weekdaytype);
-        group.save();
-        return group.getId();
-    }
+//    long createEmptyGroup(GroupType groupType, WeekdayType weekdayType, double grouptype, String weekdaytype, long room) {
+//        //Todo: OW get room by Id und add to room
+//        GroupEntity group = new GroupEntity(groupType, weekdayType, grouptype, weekdaytype);
+//        group.save();
+//        return group.getId();
+//    }
 
     boolean deleteGroup(long id) {
-      return updateGroup(id,0, "");
+       if (GroupEntity.findById(id)==null) {
+            return false;
+        }else{
+            ((GroupEntity)GroupEntity.findById(id)).delete();
+            return GroupEntity.findById(id) == null;
+        }
     }
+
 
     IGroupData getGroupById(long id) {
         return (IGroupData)GroupEntity.findById(id);
     }
 
-//    void deleteAllGroups() {
-//        GroupEntity.deleteAll();
-//    }
+    void deleteAllGroups() {
+        GroupEntity.deleteAll();
+    }
 
-    Map<WeekdayType, Map<GroupType,IGroupData>> getAllGroups() {
+    Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() {
         Map<WeekdayType, Map<GroupType,IGroupData>> result = new HashMap<WeekdayType, Map<GroupType,IGroupData>>();
         for (WeekdayType weekday : WeekdayType.values()) {
             Map<GroupType, IGroupData> dayColumn = new HashMap<GroupType, IGroupData>();
@@ -66,14 +72,17 @@ public class CRUDUseCase {
             result.get(groupEntity.getWeekdayType()).put(groupEntity.getGroupType(),groupEntity);
         }
 
-        return result;
+        return null;
     }
 
-    boolean updateGroup(long id,double price, String name) {
+    boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id,double price, String name, long roomId) {
            if (GroupEntity.findById(id) !=null) {
             GroupEntity group = (GroupEntity)GroupEntity.findById(id);
+            group.setGrouptype(grouptype);
+            group.setWeekdaytype(weekdaytype);
             group.setPrice(price);
             group.setName(name);
+            group.setRoomId(roomId);
             group.save();
             return true;
         } else {
@@ -82,30 +91,17 @@ public class CRUDUseCase {
     }
 
      long createGroup(GroupType groupType, WeekdayType weekdayType, double price, String name, long room) {
-//         GroupEntity.find("SELECT OBJECT(x)", groupType, weekdayType);
-        List<GroupEntity> groups = GroupEntity.findAll();
-         for (GroupEntity groupEntity : groups) {
-             if(groupEntity.getWeekdayType() == weekdayType
-                     && groupEntity.getGroupType() == groupType){
-                 if(updateGroup(groupEntity.getId(),price, name)){
-                    return groupEntity.getId();
-                 }else{
-                     return -1;
-                 }
-             }
-         }
-        return -1;
+        GroupEntity group = new GroupEntity(groupType, weekdayType, price, name, room);
+        group.save();
+        return group.getId();
      }
 
-    private boolean existsGroup(long id){
-        return GroupEntity.findById(id) != null;
-    }
 
-    void clearAll() {
-       List<GroupEntity> groups = GroupEntity.findAll();
-         for (GroupEntity groupEntity : groups) {
-                 deleteGroup(groupEntity.getId());
-             }
-         }
+//    void clearAll() {
+//       List<GroupEntity> groups = GroupEntity.findAll();
+//         for (GroupEntity groupEntity : groups) {
+//                 deleteGroup(groupEntity.getId());
+//             }
+//         }
 
 }

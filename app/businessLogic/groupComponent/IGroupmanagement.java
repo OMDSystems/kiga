@@ -25,7 +25,7 @@ public interface IGroupmanagement {
      *         <code> -1 </code> for failure
      * @throws TechnicalProblemException for Database failure
      */
-   public boolean updateGroup(long id, double price, String name) throws TechnicalProblemException;
+   public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype, long id, double price, String name, long roomId) throws TechnicalProblemException;
 
    /**
      * create Group and Save on Database
@@ -63,16 +63,16 @@ public interface IGroupmanagement {
     * @return Map with Weekday as Key and sortet List order is: EARLY, MORNING, AFTERNOON, WHOLEDAY, LATE
     * @throws TechnicalProblemException
     */
-   public Map<WeekdayType, Map<GroupType,IGroupData>> getAllGroups() throws TechnicalProblemException;
-
-//   /**
-//    * only for testing, not for View
-//    */
-//   public void deleteAllGroups();
+   public Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() throws TechnicalProblemException;
 
    /**
-    * clear all Groupdata
+    * only for testing, not for View
     */
-    public void clearAll();
+   public void deleteAllGroups();
+
+//   /**
+//    * clear all Groupdata
+//    */
+//    public void clearAll();
 
 }

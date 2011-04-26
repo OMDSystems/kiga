@@ -122,8 +122,8 @@ public class CustomerComponentTest extends UnitTest {
      }
      
      @Test
-     public void testDeleteAllGroups() throws TechnicalProblemException {
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+     public void testDeleteAllChildren() throws TechnicalProblemException {
+        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
@@ -131,6 +131,7 @@ public class CustomerComponentTest extends UnitTest {
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         assertEquals(6, ChildEntity.count());
         customermanagement.deleteAllChildren();
+        assertEquals(null, customermanagement.getChildData(createChild));
         assertEquals(0, ChildEntity.count());
     }
 
