@@ -13,4 +13,4 @@ GET     /{controller}/?                         {controller}.index
 GET     /{controller}/{id}                      {controller}.show({id})
 POST    /{controller}/?                         {controller}.create
 PUT     /{controller}/?                         {controller}.update
-DELETE  /{controller}/{id}                      {controller}.delete
+DELETE  /{controller}/{id}                      {controller}.delete({id})
