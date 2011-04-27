@@ -7,6 +7,8 @@ import businessLogic.zeroType.TechnicalProblemException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This Usecase has methods for advanced information and statistics
@@ -75,7 +77,11 @@ class InfoAndStatisticsUseCase {
 //    }
     
     private boolean existsChild(long childId) {
-        return crudUseCase.getChildData(childId) != null;
+        try {
+            return crudUseCase.getChildData(childId) != null;
+        } catch (ChildNotFoundException ex) {
+            return false;
+        }
     }
     
 }

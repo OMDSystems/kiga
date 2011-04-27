@@ -60,7 +60,7 @@ public class CustomerComponent implements ICustomermanagement{
         return crudUseCase.deleteChild(id);
     }
 
-    public IChildData getChildData(long id) {
+    public IChildData getChildData(long id) throws ChildNotFoundException {
         return crudUseCase.getChildData(id);
     }
 
@@ -76,9 +76,9 @@ public class CustomerComponent implements ICustomermanagement{
         return crudUseCase.getAllChildren();
     }
 
-//    public boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, ChildNotFoundException, GroupNotFoundException {
-//        return infoAndStatisticsUseCase.assignChildToGroup(childId,groupId);
-//    }
+    public boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, ChildNotFoundException, GroupNotFoundException {
+        return infoAndStatisticsUseCase.assignChildToGroup(childId,groupId);
+    }
 
     public Collection<IChildData> getAllChildrenForGroup(long groupId) {
 //        throw new UnsupportedOperationException("Not supported yet.");

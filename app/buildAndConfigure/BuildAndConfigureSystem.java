@@ -7,6 +7,9 @@ import businessLogic.groupComponent.GroupComponent;
 import businessLogic.groupComponent.IGroupmanagement;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
+import rightsManagement.IRights;
+import rightsManagement.IRightsAdministration;
+import rightsManagement.RightsComponent;
 
 /**
  * Builds business logic and configures Controllers in fassade via dependency injection
@@ -14,6 +17,10 @@ import play.jobs.OnApplicationStart;
  */
 @OnApplicationStart
 public class BuildAndConfigureSystem extends Job<String> {
+
+    private static IRights rights = null;
+
+    private static IRightsAdministration rightsAdministration = null;
 
     private static IGroupmanagement groupComponent = null;
 
@@ -33,6 +40,9 @@ public class BuildAndConfigureSystem extends Job<String> {
     public static void buildAndConfigureSystem(){
         groupComponent = GroupComponent.createComponent();
         customerComponent = CustomerComponent.createComponent(groupComponent);
+        RightsComponent rightsComponent = RightsComponent.createComponent();
+        rights = rightsComponent;
+        rightsAdministration = rightsComponent;
     }
 
     /**
@@ -50,6 +60,24 @@ public class BuildAndConfigureSystem extends Job<String> {
     public static IGroupmanagement getGroupComponent() {
         return groupComponent;
     }
+
+    /**
+     * Returns the rightsManagement of the system
+     * @return rights management
+     */
+    public static IRights getRights() {
+        return rights;
+    }
+
+    /**
+     * Returns the rightsAdministration of the system
+     * @return rights administration
+     */
+    public static IRightsAdministration getRightsAdministration() {
+        return rightsAdministration;
+    }
+
+    
 
 
 }
