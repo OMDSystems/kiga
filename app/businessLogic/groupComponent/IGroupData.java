@@ -33,9 +33,15 @@ public interface IGroupData {
      */
     public String getName();
 
-        /**
+     /**
      *
      * @return id of the Group
      */
     public long getGroupId();
+
+    /**
+     *
+     * @return id of the room
+     */
+    public long getRoomId();
 }

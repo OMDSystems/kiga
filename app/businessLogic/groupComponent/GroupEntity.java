@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import play.db.jpa.Model;
 
 /**
- * Entity of Grup
+ * Entity of Group
  * @author Oliver
  */
 @Entity
@@ -17,6 +17,7 @@ public class GroupEntity extends Model implements IGroupData{
     private WeekdayType  weekdaytype;
     private double price;
     private String name;
+    private long roomId;
 
     /**
      * create a group
@@ -24,12 +25,14 @@ public class GroupEntity extends Model implements IGroupData{
      * @param weekdaytype
      * @param price
      * @param name
+     * @param roomId
      */
-    public GroupEntity(GroupType grouptype, WeekdayType weekdaytype, double price, String name ){
+    public GroupEntity(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long roomId ){
         this.grouptype = grouptype;
         this.weekdaytype = weekdaytype;
         this.price = price;
         this.name = name;
+        this.roomId = roomId;
     }
 
     @Override
@@ -53,18 +56,24 @@ public class GroupEntity extends Model implements IGroupData{
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
+        if (this.roomId != other.roomId) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + (this.grouptype != null ? this.grouptype.hashCode() : 0);
-        hash = 97 * hash + (this.weekdaytype != null ? this.weekdaytype.hashCode() : 0);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
-        hash = 97 * hash + (this.name != null ? this.name.hashCode() : 0);
+        int hash = 5;
+        hash = 23 * hash + (this.grouptype != null ? this.grouptype.hashCode() : 0);
+        hash = 23 * hash + (this.weekdaytype != null ? this.weekdaytype.hashCode() : 0);
+        hash = 23 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        hash = 23 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 23 * hash + (int) (this.roomId ^ (this.roomId >>> 32));
         return hash;
     }
+
+
 
     public void setGrouptype(GroupType grouptype) {
         this.grouptype = grouptype;
@@ -100,6 +109,14 @@ public class GroupEntity extends Model implements IGroupData{
 
     public long getGroupId() {
        return this.getId();
+    }
+
+    public long getRoomId(){
+        return roomId;
+    }
+
+    public void setRoomId(long roomId){
+        this.roomId = roomId;
     }
 
 

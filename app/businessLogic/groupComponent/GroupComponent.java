@@ -19,7 +19,6 @@ public class GroupComponent implements IGroupmanagement{
 
     private GroupComponent(){
         this.crudusecase = CRUDUseCase.createCRUDUseCase();
-        generateEmptyGroups();
     };
 
     public static GroupComponent createComponent(){
@@ -41,28 +40,28 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.getGroupById(id);
     }
 
-    public Map<WeekdayType, Map<GroupType,IGroupData>> getAllGroups() throws TechnicalProblemException {
+    public Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() throws TechnicalProblemException {
         return crudusecase.getAllGroups();
     }
 
-//    public void deleteAllGroups() {
-//        crudusecase.deleteAllGroups();
+    public void deleteAllGroups() {
+        crudusecase.deleteAllGroups();
+    }
+
+//    private void generateEmptyGroups() {
+//          for (WeekdayType weekday : WeekdayType.values()) {
+//            for (GroupType grouptype : GroupType.values()) {
+//                crudusecase.createEmptyGroup(grouptype, weekday, 0.0,"" ,-1);
+//            }
+//        }
 //    }
 
-    private void generateEmptyGroups() {
-          for (WeekdayType weekday : WeekdayType.values()) {
-            for (GroupType grouptype : GroupType.values()) {
-                crudusecase.createEmptyGroup(grouptype, weekday, 0.0,"" ,-1);
-            }
-        }
+    public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id, double price, String name, long roomId) throws TechnicalProblemException {
+        return crudusecase.updateGroup(grouptype, weekdaytype, id, price, name, roomId);
     }
 
-    public boolean updateGroup(long id, double price, String name) throws TechnicalProblemException {
-        return crudusecase.updateGroup(id, price, name);
-    }
-
-    public void clearAll() {
-        crudusecase.clearAll();
-    }
+//    public void clearAll() {
+//        crudusecase.clearAll();
+//    }
 
 }
