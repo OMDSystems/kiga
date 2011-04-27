@@ -10,6 +10,7 @@ import businessLogic.groupComponent.IGroupData;
 import businessLogic.groupComponent.IGroupmanagement;
 import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.GroupType;
+import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class GroupComponentTest extends UnitTest {
     }
 
      @Test
-     public void testCreateGroup() throws TechnicalProblemException, GroupNotFoundException {
+     public void testCreateGroup() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
         assertTrue(createGroup > 0);
         IGroupData groupData = groupmanagement.getGroupById(createGroup);
@@ -66,21 +67,21 @@ public class GroupComponentTest extends UnitTest {
      }
 
      @Test
-     public void testDeleteGroupSuccess() throws TechnicalProblemException, GroupNotFoundException{
+     public void testDeleteGroupSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException{
          long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
          groupmanagement.deleteGroup(createGroup);
          assertEquals(groupmanagement.getGroupById(createGroup), null);
      }
 
      @Test
-     public void testDeleteGroupFail() throws TechnicalProblemException{
+     public void testDeleteGroupFail() throws TechnicalProblemException, RoomNotFoundException{
          long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
          boolean deleteGroup = groupmanagement.deleteGroup(createGroup);
         assertFalse(groupmanagement.deleteGroup(createGroup));
      }
 
      @Test
-     public void testGetGroupByIdSuccess() throws TechnicalProblemException, GroupNotFoundException{
+     public void testGetGroupByIdSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException{
         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
         IGroupData groupData = groupmanagement.getGroupById(createGroup);
         assertEquals(GroupType.EARLY, groupData.getGroupType());
@@ -88,14 +89,14 @@ public class GroupComponentTest extends UnitTest {
      }
 
      @Test
-     public void testGetGroupByIdFail() throws TechnicalProblemException, GroupNotFoundException{
+     public void testGetGroupByIdFail() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException{
         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
         IGroupData groupData = groupmanagement.getGroupById(Long.MAX_VALUE);
         assertEquals(null, groupData);
      }
 
      @Test
-     public void testDeleteAllGroupsSuccess() throws TechnicalProblemException, GroupNotFoundException{
+     public void testDeleteAllGroupsSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException{
          long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
          long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "rote Teufel", -1);
          groupmanagement.deleteAllGroups();
