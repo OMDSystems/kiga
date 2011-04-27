@@ -66,7 +66,7 @@ public interface ICustomermanagement {
      * <c>false</c> else
      * @throws if database not available
      */
-    boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException;
+    boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException, ChildNotFoundException;
 
     
     /**
@@ -85,7 +85,7 @@ public interface ICustomermanagement {
      * @param groupId technical id of group
      * @return Collection with children data
      */
-    Collection<IChildData> getAllChildrenForGroup(long groupId);
+    Collection<IChildData> getAllChildrenForGroup(long groupId) throws GroupNotFoundException;
     
     /**
      * Assigns a child to a group

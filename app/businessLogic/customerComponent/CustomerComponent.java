@@ -64,7 +64,7 @@ public class CustomerComponent implements ICustomermanagement{
         return crudUseCase.getChildData(id);
     }
 
-    public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException {
+    public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException,ChildNotFoundException {
         return crudUseCase.updateChild(id, name, familyName, dateofBirth, allergies, adress);
     }
 
@@ -80,7 +80,7 @@ public class CustomerComponent implements ICustomermanagement{
         return infoAndStatisticsUseCase.assignChildToGroup(childId,groupId);
     }
 
-    public Collection<IChildData> getAllChildrenForGroup(long groupId) {
+    public Collection<IChildData> getAllChildrenForGroup(long groupId) throws GroupNotFoundException{
 //        throw new UnsupportedOperationException("Not supported yet.");
         return infoAndStatisticsUseCase.getAllChildrenForGroup(groupId);
     }

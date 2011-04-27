@@ -60,19 +60,15 @@ class CRUDUseCase {
         return ChildEntity.findById(id) != null;
     }
     
-    public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException {
-        if (existsChild(id)) {
-            ChildEntity childEntity = (ChildEntity)ChildEntity.findById(id);
-            childEntity.setName(name);
-            childEntity.setFamilyName(familyName);
-            childEntity.setDateOfBirth(dateofBirth);
-            childEntity.setAllergies(allergies);
-            childEntity.setAdress(adress);
-            childEntity.save();
-            return true;
-        } else {
-            return false;
-        }
+    public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException, ChildNotFoundException {
+        ChildEntity childEntity = (ChildEntity) this.getChildData(id);
+        childEntity.setName(name);
+        childEntity.setFamilyName(familyName);
+        childEntity.setDateOfBirth(dateofBirth);
+        childEntity.setAllergies(allergies);
+        childEntity.setAdress(adress);
+        childEntity.save();
+        return true;
     }
 
     void deleteAllChildren() {
@@ -81,7 +77,7 @@ class CRUDUseCase {
         }
     }
 
-    Collection<IChildData> getAllChildren() {
+    Collection<IChildData> getAllChildren(){
         List<IChildData> result = new ArrayList<IChildData>();
         for (JPABase jPABase : ChildEntity.findAll()) {
             result.add((IChildData)jPABase);

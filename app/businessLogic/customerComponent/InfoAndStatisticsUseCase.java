@@ -43,7 +43,8 @@ class InfoAndStatisticsUseCase {
         return instance;
     }
 
-    Collection<IChildData> getAllChildrenForGroup(long groupId) {
+    Collection<IChildData> getAllChildrenForGroup(long groupId) throws GroupNotFoundException {
+        groupmanagement.getGroupById(groupId);
         Collection<IChildData> result = new LinkedList<IChildData>();
         for (IChildData child : crudUseCase.getAllChildren()) {
             if (child.getGroups().contains(groupId)) {
