@@ -29,8 +29,9 @@ public interface ICustomermanagement {
      * @param id technical id of child
      * @return Interface with only getters
      * @throws TechnicalProblemException if database not available
+     * @throws ChildNotFoundException if no child with id found
      */
-    IChildData getChildData(long id) throws TechnicalProblemException;
+    IChildData getChildData(long id) throws TechnicalProblemException, ChildNotFoundException;
 
 
     /**
@@ -95,7 +96,7 @@ public interface ICustomermanagement {
      * @throws GroupNotFoundException if groupId not valid
      * @throws ChildNotFoundException if childId not valid
      */
-//    boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException;
+    boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException;
 
 
 

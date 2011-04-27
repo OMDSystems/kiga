@@ -1,6 +1,7 @@
 package businessLogic.customerComponent;
 
 import businessLogic.zeroType.AdressType;
+import businessLogic.zeroType.ChildNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,8 +32,13 @@ class CRUDUseCase {
         return instance;
     }
     
-    IChildData getChildData(long id){
-        return (IChildData)ChildEntity.findById(id);
+    IChildData getChildData(long id) throws ChildNotFoundException{
+        IChildData child = (IChildData)ChildEntity.findById(id);
+        if (child == null) {
+            throw new ChildNotFoundException("No Child with id "+id+" found");
+        } else {
+            return child;
+        }
     }
     
     long createChild(String name, String familyName, Date dateOfBirth, String allergies, AdressType adress){
@@ -70,7 +76,9 @@ class CRUDUseCase {
     }
 
     void deleteAllChildren() {
-        ChildEntity.deleteAll();
+        for (JPABase jPABase : ChildEntity.findAll()) {
+            ((ChildEntity)jPABase)._delete();
+        }
     }
 
     Collection<IChildData> getAllChildren() {

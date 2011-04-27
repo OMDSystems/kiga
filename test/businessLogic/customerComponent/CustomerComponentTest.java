@@ -12,6 +12,8 @@ import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,7 +55,11 @@ public class CustomerComponentTest extends UnitTest {
     @After
     public void tearDown() {
 //        groupmanagement.deleteAllGroups();
-        customermanagement.deleteAllChildren();
+        try{
+            customermanagement.deleteAllChildren();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 
      @Test
@@ -63,7 +69,7 @@ public class CustomerComponentTest extends UnitTest {
      }
      
      @Test
-     public void testGetChildDataSuccess() throws TechnicalProblemException{
+     public void testGetChildDataSuccess() throws TechnicalProblemException, ChildNotFoundException{
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         IChildData childData = customermanagement.getChildData(createChild);
         assertEquals("Tom", childData.getName());
@@ -72,8 +78,13 @@ public class CustomerComponentTest extends UnitTest {
      
      @Test
      public void testGetChildDataFailure() throws TechnicalProblemException{
-        IChildData childData = customermanagement.getChildData(Long.MAX_VALUE);
-        assertNull(childData);
+        IChildData childData = null;
+        try {
+            childData = customermanagement.getChildData(Long.MAX_VALUE);
+            fail("Error should have been thrown");
+        } catch (ChildNotFoundException ex) {
+            //successfully thrown
+        }
      }
      
      @Test
@@ -91,7 +102,7 @@ public class CustomerComponentTest extends UnitTest {
      }
      
      @Test
-     public void testUpdateChildSuccess() throws TechnicalProblemException {
+     public void testUpdateChildSuccess() throws TechnicalProblemException, ChildNotFoundException {
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         IChildData preChildData = customermanagement.getChildData(createChild);
         boolean updateChild = customermanagement.updateChild(createChild, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
@@ -107,7 +118,7 @@ public class CustomerComponentTest extends UnitTest {
      }
      
      @Test
-     public void testUpdateChildFailure() throws TechnicalProblemException {
+     public void testUpdateChildFailure() throws TechnicalProblemException, ChildNotFoundException {
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         IChildData preChildData = customermanagement.getChildData(createChild);
         boolean updateChild = customermanagement.updateChild(createChild+1, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
@@ -123,7 +134,7 @@ public class CustomerComponentTest extends UnitTest {
      }
      
      @Test
-     public void testDeleteAllChildren() throws TechnicalProblemException {
+     public void testDeleteAllChildren() throws TechnicalProblemException, ChildNotFoundException {
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
@@ -132,7 +143,12 @@ public class CustomerComponentTest extends UnitTest {
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         assertEquals(6, ChildEntity.count());
         customermanagement.deleteAllChildren();
-        assertEquals(null, customermanagement.getChildData(createChild));
+        try{
+            customermanagement.getChildData(createChild);
+            fail("Exception should have been thrown");
+        }catch (ChildNotFoundException ex){
+            //succesfully thrown
+        }
         assertEquals(0, ChildEntity.count());
     }
 
@@ -149,33 +165,34 @@ public class CustomerComponentTest extends UnitTest {
         assertEquals(7, customermanagement.getAllChildren().size());
     }
     
-//    @Test
-//    public void testAssignChildToGroup() throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException{
-//        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-//        long updateGroup = groupmanagement.updateGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "test", -1);
-//
-//        //Child is not in group
-//        assertFalse(customermanagement.getChildData(createChild).getGroups().contains(updateGroup));
-//
-//        boolean assignChildToGroup = customermanagement.assignChildToGroup(createChild, updateGroup);
-//        //Successfully added
-//        assertTrue(assignChildToGroup);
-//
-//        //Child in group
-//        assertTrue(customermanagement.getChildData(createChild).getGroups().contains(updateGroup));
-//
-//        boolean assignChildToGroupAgain = customermanagement.assignChildToGroup(createChild, updateGroup);
-//
-//        //Not added
-//        assertFalse(assignChildToGroup);
-//
-//        //Still in group
+    @Test
+    public void testAssignChildToGroup() throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException{
+        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
+//        long updateGroup = groupmanagement.updateGroup(GroupType.EARLY, WeekdayType.MONDAY, createChild, 10d, null, createChild)
+
+        //Child is not in group
+        assertFalse(customermanagement.getChildData(createChild).getGroups().contains(createGroup));
+
+        boolean assignChildToGroup = customermanagement.assignChildToGroup(createChild, createGroup);
+        //Successfully added
+        assertTrue(assignChildToGroup);
+
+        //Child in group
+        assertTrue(customermanagement.getChildData(createChild).getGroups().contains(createGroup));
+
+        boolean assignChildToGroupAgain = customermanagement.assignChildToGroup(createChild, createGroup);
+
+        //Not added
+        assertFalse(assignChildToGroup);
+
+        //Still in group
+        assertTrue(customermanagement.getChildData(createChild).getGroups().contains(createGroup));
 //        assertEquals(null, customermanagement.getChildData(createChild));
-//        assertTrue(customermanagement.getChildData(createChild).getGroups().contains(updateGroup));
-//
-//
-//
-//    }
+
+
+
+    }
     
     @Test
     public void testGetAllChildrenForGroup() throws TechnicalProblemException {

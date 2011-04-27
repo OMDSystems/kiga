@@ -15,6 +15,7 @@ import fassade.SuperKiGaController;
 import businessLogic.customerComponent.IChildData;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.AdressType;
+import businessLogic.zeroType.ChildNotFoundException;
 
 public class Children extends SuperKiGaController {
 
@@ -27,6 +28,8 @@ public class Children extends SuperKiGaController {
       IChildData child = getCustomermanagement().getChildData(id);
       renderJSON(child);
     } catch(TechnicalProblemException e) {
+      notFound();
+    } catch(ChildNotFoundException ex){
       notFound();
     }
   }
