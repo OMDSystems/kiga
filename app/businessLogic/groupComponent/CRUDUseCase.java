@@ -104,4 +104,10 @@ public class CRUDUseCase {
         return (IRoomData)RoomEntity.findById(id);
     }
 
+    long createRoom(String name, int capacity) {
+        RoomEntity room = new RoomEntity(name, capacity);
+        room.save();
+        return room.getId();
+    }
+
 }

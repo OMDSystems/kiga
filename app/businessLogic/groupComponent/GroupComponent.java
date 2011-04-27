@@ -66,6 +66,10 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.getRoomById(id);
     }
 
+    public long createRoom(String name, int capacity) {
+        return crudusecase.createRoom(name, capacity);
+    }
+
 //    public void clearAll() {
 //        crudusecase.clearAll();
 //    }
