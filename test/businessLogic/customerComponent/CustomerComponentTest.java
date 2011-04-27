@@ -4,6 +4,7 @@ package businessLogic.customerComponent;
 import businessLogic.groupComponent.IGroupmanagement;
 import businessLogic.zeroType.ChildNotFoundException;
 import businessLogic.zeroType.GroupNotFoundException;
+import businessLogic.zeroType.RoomNotFoundException;
 import java.util.Collection;
 import java.util.List;
 import businessLogic.zeroType.AdressType;
@@ -166,7 +167,7 @@ public class CustomerComponentTest extends UnitTest {
     }
     
     @Test
-    public void testAssignChildToGroup() throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException{
+    public void testAssignChildToGroup() throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException, RoomNotFoundException{
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
 //        long updateGroup = groupmanagement.updateGroup(GroupType.EARLY, WeekdayType.MONDAY, createChild, 10d, null, createChild)
@@ -195,7 +196,7 @@ public class CustomerComponentTest extends UnitTest {
     }
     
     @Test
-    public void testGetAllChildrenForGroup() throws TechnicalProblemException {
+    public void testGetAllChildrenForGroup() throws TechnicalProblemException, RoomNotFoundException {
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
         Collection<IChildData> allChildrenForGroup = customermanagement.getAllChildrenForGroup(createGroup);

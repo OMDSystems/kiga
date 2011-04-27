@@ -53,27 +53,23 @@ class InfoAndStatisticsUseCase {
         return result;
     }
 
-//    boolean assignChildToGroup(long childId, long groupId) throws GroupNotFoundException, ChildNotFoundException, TechnicalProblemException {
-//        if (existsGroup(groupId)) {
-//            if (existsChild(childId)) {
-//                ChildEntity child = ChildEntity.findById(childId);
-//                if (!child.getGroups().contains(groupId)) {
-//                    child.getGroups().add(groupId);
-//                    child.save();
-//                }else{
-//                    return false;
-//                }
-//            }else{
-//               throw new ChildNotFoundException("Child with id "+ childId +"not found.");
-//            }
-//        } else {
-//            throw new GroupNotFoundException("Group with id "+ groupId + "not found.");
-//        }
-//        return true;
-//    }
-// 
+    boolean assignChildToGroup(long childId, long groupId) throws GroupNotFoundException, ChildNotFoundException, TechnicalProblemException {
+        ChildEntity child = ChildEntity.findById(childId);
+        if (!child.getGroups().contains(groupId)) {
+            child.getGroups().add(groupId);
+            child.save();
+        } else {
+            return false;
+        }
+        return true;
+    }
+ 
 //    private boolean existsGroup(long groupId) throws TechnicalProblemException{
-//        return groupmanagement.getGroupById(groupId) != null;
+//        try {
+//            return groupmanagement.getGroupById(groupId) != null;
+//        } catch (GroupNotFoundException ex) {
+//            return false;
+//        }
 //    }
     
     private boolean existsChild(long childId) {
