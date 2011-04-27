@@ -1,7 +1,9 @@
 
 package businessLogic.groupComponent;
 
+import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.GroupType;
+import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.WeekdayType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,12 +33,6 @@ public class CRUDUseCase {
         return usecase;
     }
 
-//    long createEmptyGroup(GroupType groupType, WeekdayType weekdayType, double grouptype, String weekdaytype, long room) {
-//        //Todo: OW get room by Id und add to room
-//        GroupEntity group = new GroupEntity(groupType, weekdayType, grouptype, weekdaytype);
-//        group.save();
-//        return group.getId();
-//    }
 
     boolean deleteGroup(long id) {
        if (GroupEntity.findById(id)==null) {
@@ -48,7 +44,10 @@ public class CRUDUseCase {
     }
 
 
-    IGroupData getGroupById(long id) {
+    IGroupData getGroupById(long id) throws GroupNotFoundException {
+        if(GroupEntity.findById(id) == null){
+            throw new GroupNotFoundException("Group with id "+id+" can not be found");
+        }
         return (IGroupData)GroupEntity.findById(id);
     }
 
@@ -75,14 +74,15 @@ public class CRUDUseCase {
         return null;
     }
 
-    boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id,double price, String name, long roomId) {
+    boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id,double price, String name, long roomId) throws GroupNotFoundException, RoomNotFoundException {
            if (GroupEntity.findById(id) !=null) {
-            GroupEntity group = (GroupEntity)GroupEntity.findById(id);
+            RoomEntity room = (RoomEntity)getRoomById(roomId);
+            GroupEntity group = (GroupEntity)getGroupById(id);
             group.setGrouptype(grouptype);
             group.setWeekdaytype(weekdaytype);
             group.setPrice(price);
             group.setName(name);
-            group.setRoomId(roomId);
+            group.setRoom(room);
             group.save();
             return true;
         } else {
@@ -90,18 +90,18 @@ public class CRUDUseCase {
         }
     }
 
-     long createGroup(GroupType groupType, WeekdayType weekdayType, double price, String name, long room) {
+     long createGroup(GroupType groupType, WeekdayType weekdayType, double price, String name, long roomId) throws RoomNotFoundException {
+        RoomEntity room = (RoomEntity)getRoomById(roomId);
         GroupEntity group = new GroupEntity(groupType, weekdayType, price, name, room);
         group.save();
         return group.getId();
      }
 
-
-//    void clearAll() {
-//       List<GroupEntity> groups = GroupEntity.findAll();
-//         for (GroupEntity groupEntity : groups) {
-//                 deleteGroup(groupEntity.getId());
-//             }
-//         }
+    IRoomData getRoomById(long id) throws RoomNotFoundException {
+        if(RoomEntity.findById(id) == null){
+            throw new RoomNotFoundException("Room with id "+id+" can not be found");
+        }
+        return (IRoomData)RoomEntity.findById(id);
+    }
 
 }

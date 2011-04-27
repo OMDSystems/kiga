@@ -17,7 +17,7 @@ public class GroupEntity extends Model implements IGroupData{
     private WeekdayType  weekdaytype;
     private double price;
     private String name;
-    private long roomId;
+    private RoomEntity room;
 
     /**
      * create a group
@@ -25,61 +25,22 @@ public class GroupEntity extends Model implements IGroupData{
      * @param weekdaytype
      * @param price
      * @param name
-     * @param roomId
+     * @param room
      */
-    public GroupEntity(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long roomId ){
+    public GroupEntity(GroupType grouptype, WeekdayType weekdaytype, double price, String name, RoomEntity room ){
         this.grouptype = grouptype;
         this.weekdaytype = weekdaytype;
         this.price = price;
         this.name = name;
-        this.roomId = roomId;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final GroupEntity other = (GroupEntity) obj;
-        if (this.grouptype != other.grouptype) {
-            return false;
-        }
-        if (this.weekdaytype != other.weekdaytype) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.price) != Double.doubleToLongBits(other.price)) {
-            return false;
-        }
-        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
-            return false;
-        }
-        if (this.roomId != other.roomId) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + (this.grouptype != null ? this.grouptype.hashCode() : 0);
-        hash = 23 * hash + (this.weekdaytype != null ? this.weekdaytype.hashCode() : 0);
-        hash = 23 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
-        hash = 23 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 23 * hash + (int) (this.roomId ^ (this.roomId >>> 32));
-        return hash;
+        this.room = room;
     }
 
 
-
-    public void setGrouptype(GroupType grouptype) {
+    void setGrouptype(GroupType grouptype) {
         this.grouptype = grouptype;
     }
 
-    public void setWeekdaytype(WeekdayType weekdaytype) {
+    void setWeekdaytype(WeekdayType weekdaytype) {
         this.weekdaytype = weekdaytype;
     }
 
@@ -99,11 +60,11 @@ public class GroupEntity extends Model implements IGroupData{
         return name;
     }
 
-    public void setPrice(double price){
+    void setPrice(double price){
         this.price = price;
     }
 
-    public void setName(String name){
+    void setName(String name){
         this.name = name;
     }
 
@@ -112,12 +73,11 @@ public class GroupEntity extends Model implements IGroupData{
     }
 
     public long getRoomId(){
-        return roomId;
+        return room.getId();
     }
 
-    public void setRoomId(long roomId){
-        this.roomId = roomId;
+    void setRoom(RoomEntity room){
+        this.room = room;
     }
-
 
 }

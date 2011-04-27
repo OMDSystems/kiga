@@ -1,6 +1,8 @@
 package businessLogic.groupComponent;
 
+import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.GroupType;
+import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
 import java.util.List;
@@ -28,7 +30,7 @@ public class GroupComponent implements IGroupmanagement{
         return groupComponent;
     }
 
-    public long createGroup(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long room) throws TechnicalProblemException {
+    public long createGroup(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long room) throws TechnicalProblemException, RoomNotFoundException {
         return crudusecase.createGroup(grouptype, weekdaytype, price, name, room);
     }
 
@@ -36,7 +38,7 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.deleteGroup(id);
     }
 
-    public IGroupData getGroupById(long id) throws TechnicalProblemException {
+    public IGroupData getGroupById(long id) throws GroupNotFoundException {
         return crudusecase.getGroupById(id);
     }
 
@@ -56,8 +58,12 @@ public class GroupComponent implements IGroupmanagement{
 //        }
 //    }
 
-    public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id, double price, String name, long roomId) throws TechnicalProblemException {
+    public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id, double price, String name, long roomId) throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
         return crudusecase.updateGroup(grouptype, weekdaytype, id, price, name, roomId);
+    }
+
+    public IRoomData getRoomById(long id) throws RoomNotFoundException {
+        return crudusecase.getRoomById(id);
     }
 
 //    public void clearAll() {

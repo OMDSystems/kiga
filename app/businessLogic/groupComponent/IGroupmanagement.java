@@ -1,6 +1,8 @@
 package businessLogic.groupComponent;
 
+import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.GroupType;
+import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
 import java.util.List;
@@ -25,7 +27,7 @@ public interface IGroupmanagement {
      *         <code> -1 </code> for failure
      * @throws TechnicalProblemException for Database failure
      */
-   public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype, long id, double price, String name, long roomId) throws TechnicalProblemException;
+   public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype, long id, double price, String name, long roomId) throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException;
 
    /**
      * create Group and Save on Database
@@ -38,7 +40,7 @@ public interface IGroupmanagement {
      *         <code> -1 </code> for failure
      * @throws TechnicalProblemException for Database failure
      */
-   public long createGroup(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long room ) throws TechnicalProblemException;
+   public long createGroup(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long room ) throws TechnicalProblemException, RoomNotFoundException;
 
 
    /**
@@ -53,10 +55,18 @@ public interface IGroupmanagement {
    /**
     *
     * @param id of the group
-    * @return Data of the group or <c> null </c> if not exists
-    * @throws TechnicalProblemException for Database failure
+    * @return Data of the group or  
+    * @throws GroupNotFoundException if Group not exists
     */
-   public IGroupData getGroupById(long id) throws TechnicalProblemException;
+   public IGroupData getGroupById(long id) throws GroupNotFoundException;
+
+   /**
+    *
+    * @param id of the room
+    * @return Data of the room
+    * @throws RoomNotFoundException if Room not found
+    */
+   public IRoomData getRoomById(long id) throws RoomNotFoundException;
 
    /**
     *
