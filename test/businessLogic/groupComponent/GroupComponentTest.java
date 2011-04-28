@@ -123,23 +123,25 @@ public class GroupComponentTest extends UnitTest {
 //         assertEquals(groupmanagement.getGroupById(wholeday), null);
 //     }
 
-//     @Test
-//     public void testGetAllGroupsSuccess() throws TechnicalProblemException{
-//         long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-//         long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "gruene Teufel", testroom);
-//         long late = groupmanagement.createGroup(GroupType.LATE, WeekdayType.MONDAY,10.00 , "blaue Teufel", testroom);
-//         long afternoon = groupmanagement.createGroup(GroupType.AFTERNOON, WeekdayType.MONDAY,10.00 , "lila Teufel", testroom);
-//         long morning = groupmanagement.createGroup(GroupType.MORNING, WeekdayType.MONDAY,10.00 , "weisse Teufel", testroom);
-//
-//         Map<WeekdayType, Map<GroupType,IGroupData>> groups = groupmanagement.getAllGroups();
-//
-//         assertTrue(Long.valueOf(groups.get(WeekdayType.MONDAY).get(GroupType.EARLY).getGroupId()).equals(Long.valueOf(early)));
+     @Test
+     public void testGetAllGroupsSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
+         long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
+         long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "gruene Teufel", testroom);
+         long late = groupmanagement.createGroup(GroupType.LATE, WeekdayType.MONDAY,10.00 , "blaue Teufel", testroom);
+         long afternoon = groupmanagement.createGroup(GroupType.AFTERNOON, WeekdayType.MONDAY,10.00 , "lila Teufel", testroom);
+         long morning = groupmanagement.createGroup(GroupType.MORNING, WeekdayType.MONDAY,10.00 , "weisse Teufel", testroom);
+
+         Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> groups = groupmanagement.getAllGroups();
+
+         List<IGroupData> roomsMonday = groups.get(WeekdayType.MONDAY).get(GroupType.EARLY).get(groupmanagement.getRoomById(testroom));
+
+         assertTrue(roomsMonday.contains(groupmanagement.getGroupById(early)));
 //         assertTrue(Long.valueOf(groups.get(WeekdayType.MONDAY).get(GroupType.LATE).getGroupId()).equals(Long.valueOf(late)));
 //         assertTrue(Long.valueOf(groups.get(WeekdayType.MONDAY).get(GroupType.MORNING).getGroupId()).equals(Long.valueOf(morning)));
 //         assertTrue(Long.valueOf(groups.get(WeekdayType.MONDAY).get(GroupType.AFTERNOON).getGroupId()).equals(Long.valueOf(afternoon)));
 //         assertTrue(Long.valueOf(groups.get(WeekdayType.MONDAY).get(GroupType.WHOLEDAY).getGroupId()).equals(Long.valueOf(wholeday)));
 //         assertEquals("", groups.get(WeekdayType.THURSDAY).get(GroupType.WHOLEDAY).getName());
-//     }
+     }
 
      
 

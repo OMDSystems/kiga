@@ -80,4 +80,8 @@ public class GroupEntity extends Model implements IGroupData{
         this.room = room;
     }
 
+    public IRoomData getRoom() {
+        return (IRoomData)room;
+    }
+
 }

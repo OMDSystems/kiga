@@ -44,4 +44,11 @@ public interface IGroupData {
      * @return id of the room
      */
     public long getRoomId();
+    
+    /**
+     * 
+     * @return room
+     */
+    public IRoomData getRoom();
+
 }

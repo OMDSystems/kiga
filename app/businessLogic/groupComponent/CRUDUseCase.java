@@ -56,11 +56,16 @@ public class CRUDUseCase {
     }
 
     Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() {
-        Map<WeekdayType, Map<GroupType,IGroupData>> result = new HashMap<WeekdayType, Map<GroupType,IGroupData>>();
+        Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> result = new HashMap<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>>();
+        List<RoomEntity> rooms = RoomEntity.findAll();
         for (WeekdayType weekday : WeekdayType.values()) {
-            Map<GroupType, IGroupData> dayColumn = new HashMap<GroupType, IGroupData>();
+            Map<GroupType, Map<IRoomData, List<IGroupData>>> dayColumn = new HashMap<GroupType, Map<IRoomData, List<IGroupData>>>();
             for (GroupType grouptype : GroupType.values()) {
-                dayColumn.put(grouptype, null);
+                Map<IRoomData, List<IGroupData>> roomColumn = new HashMap<IRoomData, List<IGroupData>>();
+                for(RoomEntity room : rooms){
+                    roomColumn.put((IRoomData)room, new ArrayList());
+                }
+                dayColumn.put(grouptype, roomColumn);
             }
             result.put(weekday, dayColumn);
         }
@@ -68,10 +73,11 @@ public class CRUDUseCase {
         List<GroupEntity> groups = GroupEntity.findAll();
 
         for (GroupEntity groupEntity : groups) {
-            result.get(groupEntity.getWeekdayType()).put(groupEntity.getGroupType(),groupEntity);
+            List temp = result.get(groupEntity.getWeekdayType()).get(groupEntity.getGroupType()).get(groupEntity.getRoom());
+            temp.add(groupEntity);
         }
 
-        return null;
+        return result;
     }
 
     boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id,double price, String name, long roomId) throws GroupNotFoundException, RoomNotFoundException {
