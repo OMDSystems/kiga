@@ -42,6 +42,13 @@ public interface IGroupmanagement {
      */
    public long createGroup(GroupType grouptype, WeekdayType weekdaytype, double price, String name, long room ) throws TechnicalProblemException, RoomNotFoundException;
 
+   /**
+    * create room and save it on database
+    * @param name of the room
+    * @param capacity of the room
+    * @return id of the room
+    */
+   public long createRoom(String name, int capacity);
 
    /**
     * delete group - not delete from database.
