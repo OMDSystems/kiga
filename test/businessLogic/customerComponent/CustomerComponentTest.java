@@ -196,7 +196,7 @@ public class CustomerComponentTest extends UnitTest {
     }
     
     @Test
-    public void testGetAllChildrenForGroup() throws TechnicalProblemException, RoomNotFoundException {
+    public void testGetAllChildrenForGroup() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
         Collection<IChildData> allChildrenForGroup = customermanagement.getAllChildrenForGroup(createGroup);
