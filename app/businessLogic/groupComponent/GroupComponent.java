@@ -35,7 +35,7 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.createGroup(grouptype, weekdaytype, price, name, room);
     }
 
-    public boolean deleteGroup(long id) throws TechnicalProblemException {
+    public boolean deleteGroup(long id) throws TechnicalProblemException, GroupNotFoundException {
         return crudusecase.deleteGroup(id);
     }
 
@@ -47,7 +47,7 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.getAllGroups();
     }
 
-    public void deleteAllGroups() {
+    public void deleteAllGroups() throws GroupNotFoundException {
         crudusecase.deleteAllGroups();
     }
 
@@ -81,6 +81,10 @@ public class GroupComponent implements IGroupmanagement{
 
     public void deleteRoomById(long roomId) {
         crudusecase.deleteRoomById(roomId);
+    }
+
+    public IWaitingQueueData getWaitingQueueByRoomId(long groupId) throws GroupNotFoundException {
+        return crudusecase.getWaitingQueueByRoomId(groupId);
     }
 
 //    public void clearAll() {

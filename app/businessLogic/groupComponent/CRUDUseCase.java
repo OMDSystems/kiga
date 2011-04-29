@@ -36,11 +36,12 @@ public class CRUDUseCase {
     }
 
 
-    boolean deleteGroup(long id) {
+    boolean deleteGroup(long id) throws GroupNotFoundException {
        if (GroupEntity.findById(id)==null) {
             return false;
         }else{
             ((GroupEntity)GroupEntity.findById(id)).delete();
+            ((WaitingQueueEntity)WaitingQueueEntity.findById(getWaitingQueueIdByRoomId(id))).delete();
             return GroupEntity.findById(id) == null;
         }
     }
@@ -53,7 +54,7 @@ public class CRUDUseCase {
         return (IGroupData)GroupEntity.findById(id);
     }
 
-    void deleteAllGroups() {
+    void deleteAllGroups() throws GroupNotFoundException {
         List<GroupEntity> groups = GroupEntity.findAll();
         for (GroupEntity groupEntity : groups) {
             deleteGroup(groupEntity.getId());
@@ -105,7 +106,13 @@ public class CRUDUseCase {
         RoomEntity room = (RoomEntity)getRoomById(roomId);
         GroupEntity group = new GroupEntity(groupType, weekdayType, price, name, room);
         group.save();
+        createWaitingQueue(group);
         return group.getId();
+     }
+
+     void createWaitingQueue(GroupEntity group){
+        WaitingQueueEntity waitingQueueEntity = new WaitingQueueEntity(group);
+        waitingQueueEntity.save();
      }
 
     IRoomData getRoomById(long id) throws RoomNotFoundException {
@@ -139,6 +146,28 @@ public class CRUDUseCase {
         for (RoomEntity roomEntity : rooms) {
             deleteRoomById(roomEntity.getId());
         }
+    }
+
+    IWaitingQueueData getWaitingQueueByRoomId(long groupId) throws GroupNotFoundException  {
+        getGroupById(groupId);
+        List<WaitingQueueEntity> waitingqueues = WaitingQueueEntity.findAll();
+        for (WaitingQueueEntity waitingQueueEntity : waitingqueues) {
+            if(waitingQueueEntity.getGroupId() == groupId){
+                return (IWaitingQueueData)WaitingQueueEntity.findById(waitingQueueEntity.getWaitingQueueId());
+            }
+        }
+            return null;
+    }
+
+    private long getWaitingQueueIdByRoomId(long groupId) throws GroupNotFoundException{
+        getGroupById(groupId);
+        List<WaitingQueueEntity> waitingqueues = WaitingQueueEntity.findAll();
+        for (WaitingQueueEntity waitingQueueEntity : waitingqueues) {
+            if(waitingQueueEntity.getGroupId() == groupId){
+                return waitingQueueEntity.getWaitingQueueId();
+            }
+        }
+            return -1;
     }
 
 }

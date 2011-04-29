@@ -79,7 +79,7 @@ public class GroupComponentTest extends UnitTest {
      }
 
      @Test
-     public void testDeleteGroupSuccess() throws TechnicalProblemException, RoomNotFoundException{
+     public void testDeleteGroupSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
          long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
          groupmanagement.deleteGroup(createGroup);
         try {
@@ -90,7 +90,7 @@ public class GroupComponentTest extends UnitTest {
      }
 
      @Test
-     public void testDeleteGroupFail() throws TechnicalProblemException, RoomNotFoundException{
+     public void testDeleteGroupFail() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
          long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
          boolean deleteGroup = groupmanagement.deleteGroup(createGroup);
         assertFalse(groupmanagement.deleteGroup(createGroup));
@@ -132,6 +132,7 @@ public class GroupComponentTest extends UnitTest {
          long room = groupmanagement.createRoom("grün", 5);
          long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
          long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "gruene Teufel", room);
+         long wholeday1 = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "blaue Teufel", room);
          long late = groupmanagement.createGroup(GroupType.LATE, WeekdayType.MONDAY,10.00 , "blaue Teufel", testroom);
          long afternoon = groupmanagement.createGroup(GroupType.AFTERNOON, WeekdayType.MONDAY,10.00 , "lila Teufel", testroom);
 
@@ -146,7 +147,7 @@ public class GroupComponentTest extends UnitTest {
          assertTrue(roomsWholeday.contains(groupmanagement.getGroupById(wholeday)));
          assertTrue(roomsLate.contains(groupmanagement.getGroupById(late)));
          assertFalse(roomsLate.contains(groupmanagement.getGroupById(afternoon)));
-
+         assertTrue(2 == roomsWholeday.size());
      }
 
       @Test

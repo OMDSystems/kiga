@@ -58,7 +58,7 @@ public interface IGroupmanagement {
     * @return <code> true </code> if deleted else <br> <code> false</code>
     * @throws TechnicalProblemException for Database failure
     */
-   public boolean deleteGroup(long id) throws TechnicalProblemException;
+   public boolean deleteGroup(long id) throws TechnicalProblemException, GroupNotFoundException;
 
    /**
     *
@@ -94,7 +94,7 @@ public interface IGroupmanagement {
    /**
     * only for testing, not for View
     */
-   public void deleteAllGroups();
+   public void deleteAllGroups() throws GroupNotFoundException;
 
    /**
     * only for testing
@@ -110,5 +110,12 @@ public interface IGroupmanagement {
 //    * clear all Groupdata
 //    */
 //    public void clearAll();
+
+   /**
+    *
+    * @param roomId Id of the room
+    * @return IWaitingQueue
+    */
+   public IWaitingQueueData getWaitingQueueByRoomId(long roomId) throws GroupNotFoundException;
 
 }
