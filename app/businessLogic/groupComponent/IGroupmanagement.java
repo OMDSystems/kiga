@@ -5,6 +5,7 @@ import businessLogic.zeroType.GroupType;
 import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -77,16 +78,34 @@ public interface IGroupmanagement {
 
    /**
     *
-    * @return Map with Weekday as Key and sortet List order is: EARLY, MORNING, AFTERNOON, WHOLEDAY, LATE
+    * @return Map with Weekday as Key, Grouptype as 2nd key and room as 3rd key
+    * get Collection with all Groups at that Time and room. Empty List, if no
+    * group planed
     * @throws TechnicalProblemException
     */
    public Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() throws TechnicalProblemException;
+
+   /**
+    * 
+    * @return Collection of all rooms
+    */
+   public Collection<IRoomData> getAllRooms() throws TechnicalProblemException;
 
    /**
     * only for testing, not for View
     */
    public void deleteAllGroups();
 
+   /**
+    * only for testing
+    */
+   public void deleteAllRooms();
+
+   /**
+    * only for testing
+    * @param roomId
+    */
+   public void deleteRoomById(long roomId);
 //   /**
 //    * clear all Groupdata
 //    */

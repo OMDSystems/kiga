@@ -5,6 +5,7 @@ import businessLogic.zeroType.GroupType;
 import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,18 @@ public class GroupComponent implements IGroupmanagement{
 
     public long createRoom(String name, int capacity) {
         return crudusecase.createRoom(name, capacity);
+    }
+
+    public Collection<IRoomData> getAllRooms() throws TechnicalProblemException {
+        return crudusecase.getAllRooms();
+    }
+
+    public void deleteAllRooms() {
+        crudusecase.deleteAllRooms();
+    }
+
+    public void deleteRoomById(long roomId) {
+        crudusecase.deleteRoomById(roomId);
     }
 
 //    public void clearAll() {

@@ -4,8 +4,10 @@ package businessLogic.groupComponent;
 import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.GroupType;
 import businessLogic.zeroType.RoomNotFoundException;
+import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +54,13 @@ public class CRUDUseCase {
     }
 
     void deleteAllGroups() {
-        GroupEntity.deleteAll();
+        List<GroupEntity> groups = GroupEntity.findAll();
+        for (GroupEntity groupEntity : groups) {
+            deleteGroup(groupEntity.getId());
+        }
     }
 
-    Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() {
+    Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() throws TechnicalProblemException {
         Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> result = new HashMap<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>>();
         List<RoomEntity> rooms = RoomEntity.findAll();
         for (WeekdayType weekday : WeekdayType.values()) {
@@ -96,7 +101,7 @@ public class CRUDUseCase {
         }
     }
 
-     long createGroup(GroupType groupType, WeekdayType weekdayType, double price, String name, long roomId) throws RoomNotFoundException {
+     long createGroup(GroupType groupType, WeekdayType weekdayType, double price, String name, long roomId) throws RoomNotFoundException, TechnicalProblemException {
         RoomEntity room = (RoomEntity)getRoomById(roomId);
         GroupEntity group = new GroupEntity(groupType, weekdayType, price, name, room);
         group.save();
@@ -114,6 +119,26 @@ public class CRUDUseCase {
         RoomEntity room = new RoomEntity(name, capacity);
         room.save();
         return room.getId();
+    }
+
+    Collection<IRoomData> getAllRooms() throws TechnicalProblemException {
+        List<RoomEntity> rooms = RoomEntity.findAll();
+        List<IRoomData> result = new ArrayList<IRoomData>();
+        for (RoomEntity roomEntity : rooms) {
+            result.add((IRoomData)roomEntity);
+        }
+        return result;
+    }
+
+    void deleteRoomById(long roomId){
+        ((RoomEntity)RoomEntity.findById(roomId)).delete();
+    }
+
+    void deleteAllRooms() {
+        List<RoomEntity> rooms = RoomEntity.findAll();
+        for (RoomEntity roomEntity : rooms) {
+            deleteRoomById(roomEntity.getId());
+        }
     }
 
 }
