@@ -8,4 +8,9 @@ public enum UsergroupType {
 
     MANAGER, PARENT;
 
+    @Override
+    public String toString(){
+        return super.name().toLowerCase();
+    }
+
 }
