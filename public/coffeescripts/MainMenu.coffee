@@ -1,12 +1,12 @@
-MainMenu = () ->
-  new Ext.tree.AsyncTreeNode(
-    expanded: true
-    children: [
-      text: 'Children'
-      leaf: true
-      targetView: ChildrenView
-    ,
-      text: 'Groups'
-      leaf: true
-    ]
-  )
+class MainMenu extends Ext.tree.AsyncTreeNode
+  constructor: ->
+    super(
+      expanded: true
+      children: [
+        text: 'Children'
+        leaf: true
+        targetView: ""
+      ,
+        text: 'Groups'
+        leaf: true
+      ])
