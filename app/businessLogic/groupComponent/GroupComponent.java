@@ -51,14 +51,6 @@ public class GroupComponent implements IGroupmanagement{
         crudusecase.deleteAllGroups();
     }
 
-//    private void generateEmptyGroups() {
-//          for (WeekdayType weekday : WeekdayType.values()) {
-//            for (GroupType grouptype : GroupType.values()) {
-//                crudusecase.createEmptyGroup(grouptype, weekday, 0.0,"" ,-1);
-//            }
-//        }
-//    }
-
     public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id, double price, String name, long roomId) throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
         return crudusecase.updateGroup(grouptype, weekdaytype, id, price, name, roomId);
     }
@@ -89,6 +81,10 @@ public class GroupComponent implements IGroupmanagement{
 
     public boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
         return crudusecase.addChildToWaitingQueue(groupId, childId);
+    }
+
+    public boolean removeChildFromWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
+        return crudusecase.removeChildFromWaitingQueue(groupId, childId);
     }
 
 

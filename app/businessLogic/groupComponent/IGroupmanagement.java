@@ -122,5 +122,14 @@ public interface IGroupmanagement {
     * @return <C>true if child</c> is added, else <c>false</c>
     */
    public boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException;
+
+   /**
+    * REmove Child from WaitingQueue
+    * @param groupId
+    * @param childId
+    * @return <C>true if child</c> is removed, else <c>false</c>
+    * @throws GroupNotFoundException
+    */
+   public boolean removeChildFromWaitingQueue(long groupId, long childId) throws GroupNotFoundException;
    
 }

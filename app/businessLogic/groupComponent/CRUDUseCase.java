@@ -152,6 +152,11 @@ public class CRUDUseCase {
         return queue.addChildToWaitingQueue(childId);
     }
 
+    boolean removeChildFromWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
+        WaitingQueueEntity queue = (WaitingQueueEntity)getWaitingQueueByGroupId(groupId);
+        return queue.removeChildFromWaitingQueue(childId);
+    }
+
   
 
 
