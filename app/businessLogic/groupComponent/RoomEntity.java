@@ -31,11 +31,11 @@ class RoomEntity extends Model implements IRoomData {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 

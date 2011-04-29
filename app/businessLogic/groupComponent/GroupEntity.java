@@ -18,6 +18,7 @@ public class GroupEntity extends Model implements IGroupData{
     private double price;
     private String name;
     private RoomEntity room;
+    private WaitingQueueEntity queue;
 
     /**
      * create a group
@@ -27,12 +28,14 @@ public class GroupEntity extends Model implements IGroupData{
      * @param name
      * @param room
      */
-    public GroupEntity(GroupType grouptype, WeekdayType weekdaytype, double price, String name, RoomEntity room ){
+    public GroupEntity(GroupType grouptype, WeekdayType weekdaytype, 
+                        double price, String name, RoomEntity room, WaitingQueueEntity waitingQueue ){
         this.grouptype = grouptype;
         this.weekdaytype = weekdaytype;
         this.price = price;
         this.name = name;
         this.room = room;
+        this.queue = waitingQueue;
     }
 
 
@@ -82,6 +85,10 @@ public class GroupEntity extends Model implements IGroupData{
 
     public IRoomData getRoom() {
         return (IRoomData)room;
+    }
+
+     IWaitingQueueData getWaitingQueue() {
+        return (IWaitingQueueData)queue;
     }
 
 }

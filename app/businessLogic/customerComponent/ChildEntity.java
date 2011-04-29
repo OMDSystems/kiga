@@ -22,7 +22,7 @@ import play.db.jpa.Model;
  * @author Marvin
  */
 @Entity
-class ChildEntity extends Model implements IChildData{
+public class ChildEntity extends Model implements IChildData{
 
     private String name;
     
@@ -43,8 +43,8 @@ class ChildEntity extends Model implements IChildData{
     )
     @JoinTable(
         name="CHILD_GROUP",
-        joinColumns=@JoinColumn(name="CHILD_ID"),
-        inverseJoinColumns=@JoinColumn(name="GROUP_ID")
+        joinColumns=@JoinColumn(name="CHILD_ID",referencedColumnName="ID"),
+        inverseJoinColumns=@JoinColumn(name="GROUP_ID",referencedColumnName="ID")
     )
     private Collection<Long> groups;
 

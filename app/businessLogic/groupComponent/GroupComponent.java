@@ -5,6 +5,7 @@ import businessLogic.zeroType.GroupType;
 import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.createGroup(grouptype, weekdaytype, price, name, room);
     }
 
-    public boolean deleteGroup(long id) throws TechnicalProblemException {
+    public boolean deleteGroup(long id) throws TechnicalProblemException, GroupNotFoundException {
         return crudusecase.deleteGroup(id);
     }
 
@@ -46,17 +47,9 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.getAllGroups();
     }
 
-    public void deleteAllGroups() {
+    public void deleteAllGroups() throws GroupNotFoundException {
         crudusecase.deleteAllGroups();
     }
-
-//    private void generateEmptyGroups() {
-//          for (WeekdayType weekday : WeekdayType.values()) {
-//            for (GroupType grouptype : GroupType.values()) {
-//                crudusecase.createEmptyGroup(grouptype, weekday, 0.0,"" ,-1);
-//            }
-//        }
-//    }
 
     public boolean updateGroup(GroupType grouptype, WeekdayType weekdaytype,long id, double price, String name, long roomId) throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
         return crudusecase.updateGroup(grouptype, weekdaytype, id, price, name, roomId);
@@ -70,8 +63,30 @@ public class GroupComponent implements IGroupmanagement{
         return crudusecase.createRoom(name, capacity);
     }
 
-//    public void clearAll() {
-//        crudusecase.clearAll();
-//    }
+    public Collection<IRoomData> getAllRooms() throws TechnicalProblemException {
+        return crudusecase.getAllRooms();
+    }
+
+    public void deleteAllRooms() {
+        crudusecase.deleteAllRooms();
+    }
+
+    public void deleteRoomById(long roomId) {
+        crudusecase.deleteRoomById(roomId);
+    }
+
+    public IWaitingQueueData getWaitingQueueByGroupId(long groupId) throws GroupNotFoundException {
+        return crudusecase.getWaitingQueueByGroupId(groupId);
+    }
+
+    public boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
+        return crudusecase.addChildToWaitingQueue(groupId, childId);
+    }
+
+    public boolean removeChildFromWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
+        return crudusecase.removeChildFromWaitingQueue(groupId, childId);
+    }
+
+
 
 }

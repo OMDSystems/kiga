@@ -119,13 +119,28 @@ public class CustomerComponentTest extends UnitTest {
      }
      
      @Test
-     public void testUpdateChildFailure() throws TechnicalProblemException, ChildNotFoundException {
+     public void testUpdateChildFailure() throws TechnicalProblemException{
         long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        IChildData preChildData = customermanagement.getChildData(createChild);
-        boolean updateChild = customermanagement.updateChild(createChild+1, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
+        IChildData preChildData = null;
+        try {
+            preChildData = customermanagement.getChildData(createChild);
+        } catch (ChildNotFoundException ex) {
+            fail("Child should be found");
+        }
+        boolean updateChild = false;
+        try {
+            updateChild = customermanagement.updateChild(createChild + 1, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
+            fail("Child should not be found");
+        } catch (ChildNotFoundException ex) {
+        }
         assertEquals(1, ChildEntity.count());
         assertEquals(false, updateChild);
-        IChildData postChildData = customermanagement.getChildData(createChild);
+        IChildData postChildData = null;
+        try {
+            postChildData = customermanagement.getChildData(createChild);
+        } catch (ChildNotFoundException ex) {
+            fail("Child should be found");
+        }
         assertEquals(preChildData.getName(), postChildData.getName());
         assertEquals(preChildData.getDateOfBirth(), postChildData.getDateOfBirth());
         assertEquals(preChildData.getAllergies(), postChildData.getAllergies());
@@ -164,44 +179,6 @@ public class CustomerComponentTest extends UnitTest {
         assertEquals(6, customermanagement.getAllChildren().size());
         customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
         assertEquals(7, customermanagement.getAllChildren().size());
-    }
-    
-    @Test
-    public void testAssignChildToGroup() throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException, RoomNotFoundException{
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
-//        long updateGroup = groupmanagement.updateGroup(GroupType.EARLY, WeekdayType.MONDAY, createChild, 10d, null, createChild)
-
-        //Child is not in group
-        assertFalse(customermanagement.getChildData(createChild).getGroups().contains(createGroup));
-
-        boolean assignChildToGroup = customermanagement.assignChildToGroup(createChild, createGroup);
-        //Successfully added
-        assertTrue(assignChildToGroup);
-
-        //Child in group
-        assertTrue(customermanagement.getChildData(createChild).getGroups().contains(createGroup));
-
-        boolean assignChildToGroupAgain = customermanagement.assignChildToGroup(createChild, createGroup);
-
-        //Not added
-        assertFalse(assignChildToGroup);
-
-        //Still in group
-        assertTrue(customermanagement.getChildData(createChild).getGroups().contains(createGroup));
-//        assertEquals(null, customermanagement.getChildData(createChild));
-
-
-
-    }
-    
-    @Test
-    public void testGetAllChildrenForGroup() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10d, "dare devils", -1);
-        Collection<IChildData> allChildrenForGroup = customermanagement.getAllChildrenForGroup(createGroup);
-
-        assertEquals(0,allChildrenForGroup.size());
     }
     
 

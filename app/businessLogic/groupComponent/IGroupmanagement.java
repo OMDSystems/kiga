@@ -5,6 +5,7 @@ import businessLogic.zeroType.GroupType;
 import businessLogic.zeroType.RoomNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.WeekdayType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public interface IGroupmanagement {
     * @return <code> true </code> if deleted else <br> <code> false</code>
     * @throws TechnicalProblemException for Database failure
     */
-   public boolean deleteGroup(long id) throws TechnicalProblemException;
+   public boolean deleteGroup(long id) throws TechnicalProblemException, GroupNotFoundException;
 
    /**
     *
@@ -77,19 +78,58 @@ public interface IGroupmanagement {
 
    /**
     *
-    * @return Map with Weekday as Key and sortet List order is: EARLY, MORNING, AFTERNOON, WHOLEDAY, LATE
+    * @return Map with Weekday as Key, Grouptype as 2nd key and room as 3rd key
+    * get Collection with all Groups at that Time and room. Empty List, if no
+    * group planed
     * @throws TechnicalProblemException
     */
    public Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> getAllGroups() throws TechnicalProblemException;
 
    /**
-    * only for testing, not for View
+    * 
+    * @return Collection of all rooms
     */
-   public void deleteAllGroups();
+   public Collection<IRoomData> getAllRooms() throws TechnicalProblemException;
 
-//   /**
-//    * clear all Groupdata
-//    */
-//    public void clearAll();
+   /**
+    * only for testing
+    */
+   public void deleteAllGroups() throws GroupNotFoundException;
 
+   /**
+    * only for testing
+    */
+   public void deleteAllRooms();
+
+   /**
+    * only for testing
+    * @param roomId
+    */
+   public void deleteRoomById(long roomId);
+
+
+   /**
+    *
+    * @param roomId Id of the room
+    * @return Data of the WaitingQueue
+    */
+   public IWaitingQueueData getWaitingQueueByGroupId(long roomId) throws GroupNotFoundException;
+
+   /**
+    * Add child to Waiting queue
+    * @param childId Id of the child
+    * @param groupId Id of the group where child will be added
+    * @return <C>true if child</c> is added, else <c>false</c>
+    */
+   public boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException;
+
+   /**
+    * REmove Child from WaitingQueue
+    * @param groupId
+    * @param childId
+    * @return <C>true if child</c> is removed, else <c>false</c>
+    * @throws GroupNotFoundException
+    */
+   public boolean removeChildFromWaitingQueue(long groupId, long childId) throws GroupNotFoundException;
+   
 }
