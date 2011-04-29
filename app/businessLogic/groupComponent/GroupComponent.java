@@ -84,10 +84,10 @@ public class GroupComponent implements IGroupmanagement{
     }
 
     public IWaitingQueueData getWaitingQueueByGroupId(long groupId) throws GroupNotFoundException {
-        return crudusecase.getWaitingQueueByRoomId(groupId);
+        return crudusecase.getWaitingQueueByGroupId(groupId);
     }
 
-    public boolean addChildToWaitingQueue(long groupId, long childId) {
+    public boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
         return crudusecase.addChildToWaitingQueue(groupId, childId);
     }
 

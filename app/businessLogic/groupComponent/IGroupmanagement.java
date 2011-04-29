@@ -121,6 +121,6 @@ public interface IGroupmanagement {
     * @param groupId Id of the group where child will be added
     * @return <C>true if child</c> is added, else <c>false</c>
     */
-   public boolean addChildToWaitingQueue(long groupId, long childId);
+   public boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException;
    
 }

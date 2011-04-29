@@ -142,13 +142,14 @@ public class CRUDUseCase {
         }
     }
 
-    public IWaitingQueueData getWaitingQueueByRoomId(long groupId) throws GroupNotFoundException  {
+    public IWaitingQueueData getWaitingQueueByGroupId(long groupId) throws GroupNotFoundException  {
          GroupEntity group = (GroupEntity)getGroupById(groupId);
          return group.getWaitingQueue();
     }
 
-    boolean addChildToWaitingQueue(long groupId, long childId) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    boolean addChildToWaitingQueue(long groupId, long childId) throws GroupNotFoundException {
+        WaitingQueueEntity queue = (WaitingQueueEntity)getWaitingQueueByGroupId(groupId);
+        return queue.addChildToWaitingQueue(childId);
     }
 
   
