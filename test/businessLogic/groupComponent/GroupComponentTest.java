@@ -165,7 +165,7 @@ public class GroupComponentTest extends UnitTest {
      }
 
      @Test
-     public void testGetAllRooms() throws TechnicalProblemException{
+     public void testGetAllRoomsSuccess() throws TechnicalProblemException{
          groupmanagement.deleteAllRooms();
          groupmanagement.createRoom("blau", 10);
          groupmanagement.createRoom("grün", 12);
@@ -173,6 +173,12 @@ public class GroupComponentTest extends UnitTest {
          assertTrue(2 == rooms.size());
      }
 
-     
+     @Test
+     public void testGetWaitingQueueSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
+         long groupId = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, testroom, "Glücksbärchies", testroom);
+         IWaitingQueueData queue = groupmanagement.getWaitingQueueByGroupId(groupId);
+         assertTrue(queue != null);
+     }
+
 
 }

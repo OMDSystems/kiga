@@ -83,12 +83,14 @@ public class GroupComponent implements IGroupmanagement{
         crudusecase.deleteRoomById(roomId);
     }
 
-    public IWaitingQueueData getWaitingQueueByRoomId(long groupId) throws GroupNotFoundException {
+    public IWaitingQueueData getWaitingQueueByGroupId(long groupId) throws GroupNotFoundException {
         return crudusecase.getWaitingQueueByRoomId(groupId);
     }
 
-//    public void clearAll() {
-//        crudusecase.clearAll();
-//    }
+    public boolean addChildToWaitingQueue(long groupId, long childId) {
+        return crudusecase.addChildToWaitingQueue(groupId, childId);
+    }
+
+
 
 }

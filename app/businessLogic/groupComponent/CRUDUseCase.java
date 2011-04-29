@@ -41,7 +41,6 @@ public class CRUDUseCase {
             return false;
         }else{
             ((GroupEntity)GroupEntity.findById(id)).delete();
-            ((WaitingQueueEntity)WaitingQueueEntity.findById(getWaitingQueueIdByRoomId(id))).delete();
             return GroupEntity.findById(id) == null;
         }
     }
@@ -104,16 +103,11 @@ public class CRUDUseCase {
 
      long createGroup(GroupType groupType, WeekdayType weekdayType, double price, String name, long roomId) throws RoomNotFoundException, TechnicalProblemException {
         RoomEntity room = (RoomEntity)getRoomById(roomId);
-        GroupEntity group = new GroupEntity(groupType, weekdayType, price, name, room);
+        GroupEntity group = new GroupEntity(groupType, weekdayType, price, name, room, new WaitingQueueEntity());
         group.save();
-        createWaitingQueue(group);
         return group.getId();
      }
 
-     void createWaitingQueue(GroupEntity group){
-        WaitingQueueEntity waitingQueueEntity = new WaitingQueueEntity(group);
-        waitingQueueEntity.save();
-     }
 
     IRoomData getRoomById(long id) throws RoomNotFoundException {
         if(RoomEntity.findById(id) == null){
@@ -148,26 +142,16 @@ public class CRUDUseCase {
         }
     }
 
-    IWaitingQueueData getWaitingQueueByRoomId(long groupId) throws GroupNotFoundException  {
-        getGroupById(groupId);
-        List<WaitingQueueEntity> waitingqueues = WaitingQueueEntity.findAll();
-        for (WaitingQueueEntity waitingQueueEntity : waitingqueues) {
-            if(waitingQueueEntity.getGroupId() == groupId){
-                return (IWaitingQueueData)WaitingQueueEntity.findById(waitingQueueEntity.getWaitingQueueId());
-            }
-        }
-            return null;
+    public IWaitingQueueData getWaitingQueueByRoomId(long groupId) throws GroupNotFoundException  {
+         GroupEntity group = (GroupEntity)getGroupById(groupId);
+         return group.getWaitingQueue();
     }
 
-    private long getWaitingQueueIdByRoomId(long groupId) throws GroupNotFoundException{
-        getGroupById(groupId);
-        List<WaitingQueueEntity> waitingqueues = WaitingQueueEntity.findAll();
-        for (WaitingQueueEntity waitingQueueEntity : waitingqueues) {
-            if(waitingQueueEntity.getGroupId() == groupId){
-                return waitingQueueEntity.getWaitingQueueId();
-            }
-        }
-            return -1;
+    boolean addChildToWaitingQueue(long groupId, long childId) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
+
+  
+
 
 }

@@ -92,7 +92,7 @@ public interface IGroupmanagement {
    public Collection<IRoomData> getAllRooms() throws TechnicalProblemException;
 
    /**
-    * only for testing, not for View
+    * only for testing
     */
    public void deleteAllGroups() throws GroupNotFoundException;
 
@@ -106,16 +106,21 @@ public interface IGroupmanagement {
     * @param roomId
     */
    public void deleteRoomById(long roomId);
-//   /**
-//    * clear all Groupdata
-//    */
-//    public void clearAll();
+
 
    /**
     *
     * @param roomId Id of the room
-    * @return IWaitingQueue
+    * @return Data of the WaitingQueue
     */
-   public IWaitingQueueData getWaitingQueueByRoomId(long roomId) throws GroupNotFoundException;
+   public IWaitingQueueData getWaitingQueueByGroupId(long roomId) throws GroupNotFoundException;
 
+   /**
+    * Add child to Waiting queue
+    * @param childId Id of the child
+    * @param groupId Id of the group where child will be added
+    * @return <C>true if child</c> is added, else <c>false</c>
+    */
+   public boolean addChildToWaitingQueue(long groupId, long childId);
+   
 }

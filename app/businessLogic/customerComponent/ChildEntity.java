@@ -22,7 +22,7 @@ import play.db.jpa.Model;
  * @author Marvin
  */
 @Entity
-class ChildEntity extends Model implements IChildData{
+public class ChildEntity extends Model implements IChildData{
 
     private String name;
     

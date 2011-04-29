@@ -1,6 +1,7 @@
 package businessLogic.groupComponent;
 
 import businessLogic.zeroType.GroupNotFoundException;
+import java.util.List;
 
 /**
  *
@@ -8,13 +9,11 @@ import businessLogic.zeroType.GroupNotFoundException;
  */
 public interface IWaitingQueueData {
 
+
     /**
      *
-     * @return Id of the group
+     * @return List of Children in Queue. Index is position in queue
      */
-    public long getGroupId() throws GroupNotFoundException;
-
-
-    public long getWaitingQueueId();
+    public List<Long> getChildInWaitingQueue();
 
 }

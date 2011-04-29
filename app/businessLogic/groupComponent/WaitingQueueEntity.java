@@ -1,6 +1,9 @@
 package businessLogic.groupComponent;
 
+import businessLogic.customerComponent.ChildEntity;
 import businessLogic.zeroType.GroupNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import play.db.jpa.Model;
 /**
@@ -10,18 +13,15 @@ import play.db.jpa.Model;
 @Entity
 public class WaitingQueueEntity extends Model implements IWaitingQueueData {
 
-    private GroupEntity group;
+//    private List<ChildEntity> childs = new ArrayList<ChildEntity>();
 
-    WaitingQueueEntity(GroupEntity group){
-        this.group = group;
+    WaitingQueueEntity(){
     }
 
-    public long getGroupId() throws GroupNotFoundException {
-        return group.getGroupId();
-    }
 
-    public long getWaitingQueueId() {
-        return this.getId();
+    public List<Long> getChildInWaitingQueue() {
+        //TODO: OW fertig stellen
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
