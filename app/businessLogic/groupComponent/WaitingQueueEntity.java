@@ -15,7 +15,7 @@ import play.db.jpa.Model;
 public class WaitingQueueEntity extends Model implements IWaitingQueueData {
 
     @ManyToMany
-    private List<ChildEntity> childs = new ArrayList<ChildEntity>();
+    private List<ChildEntity> children = new ArrayList<ChildEntity>();
 
     WaitingQueueEntity(){
     }
@@ -23,7 +23,7 @@ public class WaitingQueueEntity extends Model implements IWaitingQueueData {
 
     public List<Long> getChildInWaitingQueue() {
         List<Long> result = new ArrayList<Long>();
-        for (ChildEntity childEntity : childs) {
+        for (ChildEntity childEntity : children) {
             result.add((Long)childEntity.getId());
         }
         return result;
@@ -31,12 +31,12 @@ public class WaitingQueueEntity extends Model implements IWaitingQueueData {
 
     boolean addChildToWaitingQueue(long childId){
         ChildEntity child = ChildEntity.findById(childId);
-        return childs.add(child);
+        return children.add(child);
     }
 
     boolean removeChildFromWaitingQueue(long childId) {
         ChildEntity child = ChildEntity.findById(childId);
-        return childs.remove(child);
+        return children.remove(child);
     }
 
 }
