@@ -57,6 +57,18 @@ public class assignChildToWaitingQueueTest extends UnitTest {
 
   }
 
+   @Test
+    public void testAssignEqualChildToWaitingQueueSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
+    long testroom = groupmanagement.createRoom("blau", 10);
+    long testgroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "Teufelkerle", testroom);
+    AdressType address = new AdressType("Stiftstr", "20558", "HH", "", "7");
+    long testChild = customermanagement.createChild("Franz", "Egon", new Date(), "Keine", address);
+
+    groupmanagement.addChildToWaitingQueue(testgroup, testChild);
+    assertFalse(groupmanagement.addChildToWaitingQueue(testgroup, testChild));
+
+  }
+
   public void testGetAllChildIdOfWaitingQueueSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
     long testroom = groupmanagement.createRoom("blau", 10);
     long testgroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "Teufelkerle", testroom);

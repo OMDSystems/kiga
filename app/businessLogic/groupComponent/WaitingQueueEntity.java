@@ -31,7 +31,11 @@ public class WaitingQueueEntity extends Model implements IWaitingQueueData {
 
   boolean addChildToWaitingQueue(long childId) {
     ChildEntity child = ChildEntity.findById(childId);
-    return children.add(child);
+      if(children.contains(child)){
+          return false;
+      }else{
+            return children.add(child);
+      }
   }
 
   boolean removeChildFromWaitingQueue(long childId) {
