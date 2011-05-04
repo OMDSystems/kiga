@@ -20,7 +20,9 @@ ChildrenView = (function() {
             text: 'Add Child',
             icon: '/public/images/default/dd/drop-add.gif',
             handler: function(btn) {
-              return AddChildDialog().show();
+              var view;
+              view = new AddChildView();
+              return view.show();
             }
           })
         ]

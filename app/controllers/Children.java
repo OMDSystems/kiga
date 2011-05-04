@@ -7,9 +7,9 @@ import java.util.*;
 
 //import models.*;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import fassade.SuperKiGaController;
 import businessLogic.customerComponent.IChildData;
@@ -41,13 +41,14 @@ public class Children extends SuperKiGaController {
         params.get("zip"),
         params.get("town"),
         params.get("additional"),
-        params.get("houseNumber")
+        params.get("street_number")
       );
 
-      Date birthday = DateFormat.getInstance().parse(params.get("date_of_birth"));
+      SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
+      Date birthday = formatter.parse(params.get("date_of_birth"));
 
       getCustomermanagement().createChild(
-        params.get("name"),
+        params.get("first_name"),
         params.get("last_name"),
         birthday,
         params.get("allergies"),

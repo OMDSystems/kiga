@@ -10,7 +10,8 @@ class ChildrenView extends Ext.Panel
             text: 'Add Child',
             icon: '/public/images/default/dd/drop-add.gif',
             handler: (btn) ->
-              AddChildDialog().show()
+              view = new AddChildView()
+              view.show()
         ])
       ,
       items: [

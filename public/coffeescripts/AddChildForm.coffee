@@ -1,43 +1,66 @@
 class AddChildForm extends Ext.form.FormPanel
   constructor: ->
     super(
-      title: 'Form Layout',
-      bodyStyle: 'padding:15px',
-      defaultType: 'textfield',
+      id: 'addChildForm'
+      title: 'Form Layout'
+      bodyStyle: 'padding:15px'
+      defaultType: 'textfield'
       defaults:
-        width: 200,
+        width: 200
         msgTarget: 'side'
       ,
       items: [
-              fieldLabel: 'First Name',
-              name: 'firstname',
-              allowBlank: false,
-              labelSeparator: ':'
+            fieldLabel: 'First Name'
+            name: 'first_name'
+            allowBlank: false
+            labelSeparator: ':'
           ,
-              fieldLabel: 'Last Name',
-              name: 'lastname'
+            fieldLabel: 'Last Name'
+            name: 'last_name'
           ,
-            fieldLabel: 'Birthday',
+            fieldLabel: 'Birthday'
+            name: 'date_of_birth'
             xtype: 'datefield'
+            format: 'd.m.Y'
           ,
-            fieldLabel: 'Street',
+            fieldLabel: 'Street'
+            name: 'street'
           ,
-            fieldLabel: 'Street Number',
+            fieldLabel: 'Street Number'
+            name: 'street_number'
+          ,
+            fieldLabel: 'Zipcode'
             xtype: 'numberfield'
-          ,
-            fieldLabel: 'Zipcode',
-            xtype: 'numberfield'
+            name: 'zip'
           ,
             fieldLabel: 'City'
+            name: 'city'
           ,
-            fieldLabel: 'Allergies',
-            xtype: 'textarea',
-            name: 'allergies',
+            fieldLabel: 'Additional'
+            name: 'additional'
+          ,
+            fieldLabel: 'Allergies'
+            xtype: 'textarea'
+            name: 'allergies'
       ],
       buttons: [
-          {text: 'Save'},
-          {text: 'Cancel', handler: (n) -> }
+          text: 'Save'
+          handler: (obj) ->
+            form = Ext.getCmp('addChildForm')
+            form.getForm().submit(
+              url: '/children'
+              success: this.onFormSubmissionDone
+              failure: this.onFormSubmissionDone
+            )
+        ,
+          text: 'Cancel'
+          handler: (n) ->
+            window = Ext.getCmp('addChildView')
+            window.close()
       ],
       hideLabels: false,
       labelAlign: 'left',
       labelPad: 8)
+
+  onFormSubmissionDone: (form, action) ->
+    console.debug('dsd')

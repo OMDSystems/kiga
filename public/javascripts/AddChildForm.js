@@ -11,6 +11,7 @@ AddChildForm = (function() {
   __extends(AddChildForm, Ext.form.FormPanel);
   function AddChildForm() {
     AddChildForm.__super__.constructor.call(this, {
+      id: 'addChildForm',
       title: 'Form Layout',
       bodyStyle: 'padding:15px',
       defaultType: 'textfield',
@@ -21,25 +22,33 @@ AddChildForm = (function() {
       items: [
         {
           fieldLabel: 'First Name',
-          name: 'firstname',
+          name: 'first_name',
           allowBlank: false,
           labelSeparator: ':'
         }, {
           fieldLabel: 'Last Name',
-          name: 'lastname'
+          name: 'last_name'
         }, {
           fieldLabel: 'Birthday',
-          xtype: 'datefield'
+          name: 'date_of_birth',
+          xtype: 'datefield',
+          format: 'd.m.Y'
         }, {
-          fieldLabel: 'Street'
+          fieldLabel: 'Street',
+          name: 'street'
         }, {
           fieldLabel: 'Street Number',
-          xtype: 'numberfield'
+          name: 'street_number'
         }, {
           fieldLabel: 'Zipcode',
-          xtype: 'numberfield'
+          xtype: 'numberfield',
+          name: 'zip'
         }, {
-          fieldLabel: 'City'
+          fieldLabel: 'City',
+          name: 'city'
+        }, {
+          fieldLabel: 'Additional',
+          name: 'additional'
         }, {
           fieldLabel: 'Allergies',
           xtype: 'textarea',
@@ -48,10 +57,23 @@ AddChildForm = (function() {
       ],
       buttons: [
         {
-          text: 'Save'
+          text: 'Save',
+          handler: function(obj) {
+            var form;
+            form = Ext.getCmp('addChildForm');
+            return form.getForm().submit({
+              url: '/children',
+              success: this.onFormSubmissionDone,
+              failure: this.onFormSubmissionDone
+            });
+          }
         }, {
           text: 'Cancel',
-          handler: function(n) {}
+          handler: function(n) {
+            var window;
+            window = Ext.getCmp('addChildView');
+            return window.close();
+          }
         }
       ],
       hideLabels: false,
@@ -59,5 +81,8 @@ AddChildForm = (function() {
       labelPad: 8
     });
   }
+  AddChildForm.prototype.onFormSubmissionDone = function(form, action) {
+    return console.debug('dsd');
+  };
   return AddChildForm;
 })();

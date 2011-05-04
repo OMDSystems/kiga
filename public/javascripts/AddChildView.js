@@ -1,4 +1,4 @@
-var AddChildDialog;
+var AddChildView;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,10 +7,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-AddChildDialog = (function() {
-  __extends(AddChildDialog, Ext.Window);
-  function AddChildDialog() {
-    AddChildDialog.__super__.constructor.call(this, {
+AddChildView = (function() {
+  __extends(AddChildView, Ext.Window);
+  function AddChildView() {
+    AddChildView.__super__.constructor.call(this, {
+      id: 'addChildView',
       width: 370,
       modal: true,
       resizable: false,
@@ -18,5 +19,5 @@ AddChildDialog = (function() {
       items: [new AddChildForm()]
     });
   }
-  return AddChildDialog;
+  return AddChildView;
 })();
