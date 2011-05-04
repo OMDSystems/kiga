@@ -1,5 +1,5 @@
 .DS_STORE
 tmp/
 
-/nbproject
-/test-result
+nbproject/
+test-result/
