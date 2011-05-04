@@ -6,18 +6,17 @@ package rightsManagement;
  */
 public class InvalidTokenException extends Exception {
 
-    /**
-     * Creates a new instance of <code>InvalidTokenException</code> without detail message.
-     */
-    public InvalidTokenException() {
-    }
+  /**
+   * Creates a new instance of <code>InvalidTokenException</code> without detail message.
+   */
+  public InvalidTokenException() {
+  }
 
-
-    /**
-     * Constructs an instance of <code>InvalidTokenException</code> with the specified detail message.
-     * @param msg the detail message.
-     */
-    public InvalidTokenException(String msg) {
-        super(msg);
-    }
+  /**
+   * Constructs an instance of <code>InvalidTokenException</code> with the specified detail message.
+   * @param msg the detail message.
+   */
+  public InvalidTokenException(String msg) {
+    super(msg);
+  }
 }

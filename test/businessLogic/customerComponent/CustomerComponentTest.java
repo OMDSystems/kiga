@@ -1,6 +1,5 @@
 package businessLogic.customerComponent;
 
-
 import businessLogic.groupComponent.IGroupmanagement;
 import businessLogic.zeroType.ChildNotFoundException;
 import businessLogic.zeroType.GroupNotFoundException;
@@ -29,157 +28,152 @@ import static org.junit.Assert.*;
  */
 public class CustomerComponentTest extends UnitTest {
 
+  private static ICustomermanagement customermanagement;
+  private static IGroupmanagement groupmanagement;
 
-    private static ICustomermanagement customermanagement;
-    
-    private static IGroupmanagement groupmanagement;
+  public CustomerComponentTest() {
+  }
 
+  @BeforeClass
+  public static void setUpClass() throws Exception {
+    buildAndConfigure.BuildAndConfigureSystem.buildAndConfigureSystem();
+    customermanagement = buildAndConfigure.BuildAndConfigureSystem.getCustomerComponent();
+    groupmanagement = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent();
+  }
 
-    public CustomerComponentTest() {
-    }
+  @AfterClass
+  public static void tearDownClass() throws Exception {
+  }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        buildAndConfigure.BuildAndConfigureSystem.buildAndConfigureSystem();
-        customermanagement = buildAndConfigure.BuildAndConfigureSystem.getCustomerComponent();
-        groupmanagement = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent();
-    }
+  @Before
+  public void setUp() {
+  }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+  @After
+  public void tearDown() {
 //        groupmanagement.deleteAllGroups();
-        try{
-            customermanagement.deleteAllChildren();
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
+    try {
+      customermanagement.deleteAllChildren();
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
     }
+  }
 
-     @Test
-     public void testCreateChild() throws TechnicalProblemException {
-        long createChild = customermanagement.createChild("Hans", "Wurst", new Date(), "vegetables", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        assertTrue(createChild > 0);
-     }
-     
-     @Test
-     public void testGetChildDataSuccess() throws TechnicalProblemException, ChildNotFoundException{
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        IChildData childData = customermanagement.getChildData(createChild);
-        assertEquals("Tom", childData.getName());
-        assertEquals("Kauschat", childData.getFamilyName());
-     }
-     
-     @Test
-     public void testGetChildDataFailure() throws TechnicalProblemException{
-        IChildData childData = null;
-        try {
-            childData = customermanagement.getChildData(Long.MAX_VALUE);
-            fail("Error should have been thrown");
-        } catch (ChildNotFoundException ex) {
-            //successfully thrown
-        }
-     }
-     
-     @Test
-     public void testDeleteChildSuccess() throws TechnicalProblemException{
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        boolean deleteChild = customermanagement.deleteChild(createChild);
-        assertTrue(deleteChild);
-     }
-     
-     @Test
-     public void testDeleteChildFailure() throws TechnicalProblemException{
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        boolean deleteChild = customermanagement.deleteChild(Long.MAX_VALUE);
-        assertFalse(deleteChild);
-     }
-     
-     @Test
-     public void testUpdateChildSuccess() throws TechnicalProblemException, ChildNotFoundException {
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        IChildData preChildData = customermanagement.getChildData(createChild);
-        boolean updateChild = customermanagement.updateChild(createChild, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
-        assertEquals(1, ChildEntity.count());
-        assertEquals(true, updateChild);
-        IChildData postChildData = customermanagement.getChildData(createChild);
-        assertEquals(preChildData.getName(), postChildData.getName());
-        assertEquals(preChildData.getDateOfBirth(), postChildData.getDateOfBirth());
-        assertEquals(preChildData.getAllergies(), postChildData.getAllergies());
-        assertEquals(preChildData.getAdress(), postChildData.getAdress());
-        assertEquals("Meyer", preChildData.getFamilyName());
-        assertEquals("Meyer", postChildData.getFamilyName());
-     }
-     
-     @Test
-     public void testUpdateChildFailure() throws TechnicalProblemException{
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        IChildData preChildData = null;
-        try {
-            preChildData = customermanagement.getChildData(createChild);
-        } catch (ChildNotFoundException ex) {
-            fail("Child should be found");
-        }
-        boolean updateChild = false;
-        try {
-            updateChild = customermanagement.updateChild(createChild + 1, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
-            fail("Child should not be found");
-        } catch (ChildNotFoundException ex) {
-        }
-        assertEquals(1, ChildEntity.count());
-        assertEquals(false, updateChild);
-        IChildData postChildData = null;
-        try {
-            postChildData = customermanagement.getChildData(createChild);
-        } catch (ChildNotFoundException ex) {
-            fail("Child should be found");
-        }
-        assertEquals(preChildData.getName(), postChildData.getName());
-        assertEquals(preChildData.getDateOfBirth(), postChildData.getDateOfBirth());
-        assertEquals(preChildData.getAllergies(), postChildData.getAllergies());
-        assertEquals(preChildData.getAdress(), postChildData.getAdress());
-        assertEquals("Kauschat", preChildData.getFamilyName());
-        assertEquals("Kauschat", postChildData.getFamilyName());
-     }
-     
-     @Test
-     public void testDeleteAllChildren() throws TechnicalProblemException, ChildNotFoundException {
-        long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        assertEquals(6, ChildEntity.count());
-        customermanagement.deleteAllChildren();
-        try{
-            customermanagement.getChildData(createChild);
-            fail("Exception should have been thrown");
-        }catch (ChildNotFoundException ex){
-            //succesfully thrown
-        }
-        assertEquals(0, ChildEntity.count());
+  @Test
+  public void testCreateChild() throws TechnicalProblemException {
+    long createChild = customermanagement.createChild("Hans", "Wurst", new Date(), "vegetables", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    assertTrue(createChild > 0);
+  }
+
+  @Test
+  public void testGetChildDataSuccess() throws TechnicalProblemException, ChildNotFoundException {
+    long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    IChildData childData = customermanagement.getChildData(createChild);
+    assertEquals("Tom", childData.getName());
+    assertEquals("Kauschat", childData.getFamilyName());
+  }
+
+  @Test
+  public void testGetChildDataFailure() throws TechnicalProblemException {
+    IChildData childData = null;
+    try {
+      childData = customermanagement.getChildData(Long.MAX_VALUE);
+      fail("Error should have been thrown");
+    } catch (ChildNotFoundException ex) {
+      //successfully thrown
     }
+  }
 
-    @Test
-    public void testGetAllChildren() throws TechnicalProblemException {
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        assertEquals(6, customermanagement.getAllChildren().size());
-        customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
-        assertEquals(7, customermanagement.getAllChildren().size());
+  @Test
+  public void testDeleteChildSuccess() throws TechnicalProblemException {
+    long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    boolean deleteChild = customermanagement.deleteChild(createChild);
+    assertTrue(deleteChild);
+  }
+
+  @Test
+  public void testDeleteChildFailure() throws TechnicalProblemException {
+    long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    boolean deleteChild = customermanagement.deleteChild(Long.MAX_VALUE);
+    assertFalse(deleteChild);
+  }
+
+  @Test
+  public void testUpdateChildSuccess() throws TechnicalProblemException, ChildNotFoundException {
+    long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    IChildData preChildData = customermanagement.getChildData(createChild);
+    boolean updateChild = customermanagement.updateChild(createChild, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
+    assertEquals(1, ChildEntity.count());
+    assertEquals(true, updateChild);
+    IChildData postChildData = customermanagement.getChildData(createChild);
+    assertEquals(preChildData.getName(), postChildData.getName());
+    assertEquals(preChildData.getDateOfBirth(), postChildData.getDateOfBirth());
+    assertEquals(preChildData.getAllergies(), postChildData.getAllergies());
+    assertEquals(preChildData.getAdress(), postChildData.getAdress());
+    assertEquals("Meyer", preChildData.getFamilyName());
+    assertEquals("Meyer", postChildData.getFamilyName());
+  }
+
+  @Test
+  public void testUpdateChildFailure() throws TechnicalProblemException {
+    long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    IChildData preChildData = null;
+    try {
+      preChildData = customermanagement.getChildData(createChild);
+    } catch (ChildNotFoundException ex) {
+      fail("Child should be found");
     }
-    
+    boolean updateChild = false;
+    try {
+      updateChild = customermanagement.updateChild(createChild + 1, preChildData.getName(), "Meyer", preChildData.getDateOfBirth(), preChildData.getAllergies(), preChildData.getAdress());
+      fail("Child should not be found");
+    } catch (ChildNotFoundException ex) {
+    }
+    assertEquals(1, ChildEntity.count());
+    assertEquals(false, updateChild);
+    IChildData postChildData = null;
+    try {
+      postChildData = customermanagement.getChildData(createChild);
+    } catch (ChildNotFoundException ex) {
+      fail("Child should be found");
+    }
+    assertEquals(preChildData.getName(), postChildData.getName());
+    assertEquals(preChildData.getDateOfBirth(), postChildData.getDateOfBirth());
+    assertEquals(preChildData.getAllergies(), postChildData.getAllergies());
+    assertEquals(preChildData.getAdress(), postChildData.getAdress());
+    assertEquals("Kauschat", preChildData.getFamilyName());
+    assertEquals("Kauschat", postChildData.getFamilyName());
+  }
 
+  @Test
+  public void testDeleteAllChildren() throws TechnicalProblemException, ChildNotFoundException {
+    long createChild = customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    assertEquals(6, ChildEntity.count());
+    customermanagement.deleteAllChildren();
+    try {
+      customermanagement.getChildData(createChild);
+      fail("Exception should have been thrown");
+    } catch (ChildNotFoundException ex) {
+      //succesfully thrown
+    }
+    assertEquals(0, ChildEntity.count());
+  }
+
+  @Test
+  public void testGetAllChildren() throws TechnicalProblemException {
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    assertEquals(6, customermanagement.getAllChildren().size());
+    customermanagement.createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
+    assertEquals(7, customermanagement.getAllChildren().size());
+  }
 }

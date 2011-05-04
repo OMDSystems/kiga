@@ -9,46 +9,45 @@ import businessLogic.zeroType.WeekdayType;
  */
 public interface IGroupData {
 
-    /**
-     *
-     * @return GrouptType
-     */
-    public GroupType getGroupType();
+  /**
+   *
+   * @return GrouptType
+   */
+  public GroupType getGroupType();
 
-    /**
-     *
-     * @return WeekdayType
-     */
-    public WeekdayType getWeekdayType();
+  /**
+   *
+   * @return WeekdayType
+   */
+  public WeekdayType getWeekdayType();
 
-    /**
-     *
-     * @return Price
-     */
-    public double getPrice();
+  /**
+   *
+   * @return Price
+   */
+  public double getPrice();
 
-    /**
-     *
-     * @return name of the group
-     */
-    public String getName();
+  /**
+   *
+   * @return name of the group
+   */
+  public String getName();
 
-     /**
-     *
-     * @return id of the Group
-     */
-    public long getGroupId();
+  /**
+   *
+   * @return id of the Group
+   */
+  public long getGroupId();
 
-    /**
-     *
-     * @return id of the room
-     */
-    public long getRoomId();
-    
-    /**
-     * 
-     * @return room
-     */
-    public IRoomData getRoom();
+  /**
+   *
+   * @return id of the room
+   */
+  public long getRoomId();
 
+  /**
+   *
+   * @return room
+   */
+  public IRoomData getRoom();
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import play.db.jpa.Model;
+
 /**
  *
  * @author Oliver
@@ -14,29 +15,27 @@ import play.db.jpa.Model;
 @Entity
 public class WaitingQueueEntity extends Model implements IWaitingQueueData {
 
-    @ManyToMany
-    private List<ChildEntity> children = new ArrayList<ChildEntity>();
+  @ManyToMany
+  private List<ChildEntity> children = new ArrayList<ChildEntity>();
 
-    WaitingQueueEntity(){
+  WaitingQueueEntity() {
+  }
+
+  public List<Long> getChildInWaitingQueue() {
+    List<Long> result = new ArrayList<Long>();
+    for (ChildEntity childEntity : children) {
+      result.add((Long) childEntity.getId());
     }
+    return result;
+  }
 
+  boolean addChildToWaitingQueue(long childId) {
+    ChildEntity child = ChildEntity.findById(childId);
+    return children.add(child);
+  }
 
-    public List<Long> getChildInWaitingQueue() {
-        List<Long> result = new ArrayList<Long>();
-        for (ChildEntity childEntity : children) {
-            result.add((Long)childEntity.getId());
-        }
-        return result;
-    }
-
-    boolean addChildToWaitingQueue(long childId){
-        ChildEntity child = ChildEntity.findById(childId);
-        return children.add(child);
-    }
-
-    boolean removeChildFromWaitingQueue(long childId) {
-        ChildEntity child = ChildEntity.findById(childId);
-        return children.remove(child);
-    }
-
+  boolean removeChildFromWaitingQueue(long childId) {
+    ChildEntity child = ChildEntity.findById(childId);
+    return children.remove(child);
+  }
 }

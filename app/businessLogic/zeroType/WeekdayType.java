@@ -1,4 +1,3 @@
-
 package businessLogic.zeroType;
 
 /**
@@ -7,6 +6,5 @@ package businessLogic.zeroType;
  */
 public enum WeekdayType {
 
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY;
-
+  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY;
 }

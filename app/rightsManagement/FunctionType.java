@@ -1,4 +1,3 @@
-
 package rightsManagement;
 
 /**
@@ -7,6 +6,5 @@ package rightsManagement;
  */
 public enum FunctionType {
 
-    ADDCHILD, UPDATECHILD, DELETECHILD, READCHILD;
-
+  ADDCHILD, UPDATECHILD, DELETECHILD, READCHILD;
 }

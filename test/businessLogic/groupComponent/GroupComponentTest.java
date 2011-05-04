@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package businessLogic.groupComponent;
 
 import businessLogic.groupComponent.GroupEntity;
@@ -33,152 +32,148 @@ import play.test.UnitTest;
  */
 public class GroupComponentTest extends UnitTest {
 
+  private static IGroupmanagement groupmanagement;
 
-    private static IGroupmanagement groupmanagement;
+  public GroupComponentTest() {
+  }
 
+  @BeforeClass
+  public static void setUpClass() throws Exception {
+    buildAndConfigure.BuildAndConfigureSystem.buildAndConfigureSystem();
+    groupmanagement = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent();
+  }
 
-    public GroupComponentTest() {
-    }
+  @AfterClass
+  public static void tearDownClass() throws Exception {
+  }
+  long testroom;
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        buildAndConfigure.BuildAndConfigureSystem.buildAndConfigureSystem();
-        groupmanagement = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent();
-    }
+  @Before
+  public void setUp() {
+    testroom = groupmanagement.createRoom("blau", 10);
+  }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    long testroom;
-    @Before
-    public void setUp() {
-       testroom = groupmanagement.createRoom("blau", 10);
-    }
-
-    @After
-    public void tearDown() {
+  @After
+  public void tearDown() {
 //        groupmanagement.clearAll();
-        GroupEntity.deleteAll();
+    GroupEntity.deleteAll();
+  }
+
+  @Test
+  public void testCreateRoom() throws RoomNotFoundException {
+    long room = groupmanagement.createRoom("10.01", 18);
+    assertTrue(room > 0);
+    IRoomData roomData = groupmanagement.getRoomById(room);
+    assertEquals("10.01", roomData.getName());
+  }
+
+  @Test
+  public void testCreateGroup() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
+    long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    assertTrue(createGroup > 0);
+    IGroupData groupData = groupmanagement.getGroupById(createGroup);
+    assertEquals(groupData.getName(), "rote Teufel");
+  }
+
+  @Test
+  public void testDeleteGroupSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
+    long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    groupmanagement.deleteGroup(createGroup);
+    try {
+      groupmanagement.getGroupById(createGroup);
+      fail("Sollte ein Fehler geworfen werden");
+    } catch (GroupNotFoundException ex) {
+    }
+  }
+
+  @Test
+  public void testDeleteGroupFail() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
+    long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    boolean deleteGroup = groupmanagement.deleteGroup(createGroup);
+    assertFalse(groupmanagement.deleteGroup(createGroup));
+  }
+
+  @Test
+  public void testGetGroupByIdSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
+    long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    IGroupData groupData = groupmanagement.getGroupById(createGroup);
+    assertEquals(GroupType.EARLY, groupData.getGroupType());
+    assertEquals("rote Teufel", groupData.getName());
+  }
+
+  @Test
+  public void testGetGroupByIdFail() throws TechnicalProblemException, RoomNotFoundException {
+    long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    try {
+      groupmanagement.getGroupById(Long.MAX_VALUE);
+      fail("Sollte ein Fehler geworfen werden");
+    } catch (GroupNotFoundException ex) {
+    }
+  }
+
+  @Test
+  public void testDeleteAllGroupsSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
+    long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    groupmanagement.deleteAllGroups();
+    try {
+      groupmanagement.getGroupById(early);
+      groupmanagement.getGroupById(wholeday);
+      fail("Sollte ein Fehler geworfen werden");
+    } catch (GroupNotFoundException ex) {
+    }
+  }
+
+  @Test
+  public void testGetAllGroupsSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
+    long room = groupmanagement.createRoom("grün", 5);
+    long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, 10.00, "rote Teufel", testroom);
+    long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY, 10.00, "gruene Teufel", room);
+    long wholeday1 = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY, 10.00, "blaue Teufel", room);
+    long late = groupmanagement.createGroup(GroupType.LATE, WeekdayType.MONDAY, 10.00, "blaue Teufel", testroom);
+    long afternoon = groupmanagement.createGroup(GroupType.AFTERNOON, WeekdayType.MONDAY, 10.00, "lila Teufel", testroom);
+
+    Map<WeekdayType, Map<GroupType, Map<IRoomData, List<IGroupData>>>> groups = groupmanagement.getAllGroups();
+
+    List<IGroupData> roomsMonday = groups.get(WeekdayType.MONDAY).get(GroupType.EARLY).get(groupmanagement.getRoomById(testroom));
+    List<IGroupData> roomsWholeday = groups.get(WeekdayType.MONDAY).get(GroupType.WHOLEDAY).get(groupmanagement.getRoomById(room));
+    List<IGroupData> roomsLate = groups.get(WeekdayType.MONDAY).get(GroupType.LATE).get(groupmanagement.getRoomById(testroom));
+    List<IGroupData> roomsAfternoon = groups.get(WeekdayType.MONDAY).get(GroupType.LATE).get(groupmanagement.getRoomById(testroom));
+
+    assertTrue(roomsMonday.contains(groupmanagement.getGroupById(early)));
+    assertTrue(roomsWholeday.contains(groupmanagement.getGroupById(wholeday)));
+    assertTrue(roomsLate.contains(groupmanagement.getGroupById(late)));
+    assertFalse(roomsLate.contains(groupmanagement.getGroupById(afternoon)));
+    assertTrue(2 == roomsWholeday.size());
+  }
+
+  @Test
+  public void testDeleteAllRoomsSuccess() throws TechnicalProblemException {
+    long room1 = groupmanagement.createRoom("blau", 10);
+    long room2 = groupmanagement.createRoom("grün", 12);
+    groupmanagement.deleteAllRooms();
+    try {
+      groupmanagement.getRoomById(room1);
+      groupmanagement.getRoomById(room2);
+      fail("Sollte ein Fehler geworfen werden");
+    } catch (RoomNotFoundException ex) {
     }
 
-    @Test
-    public void testCreateRoom() throws RoomNotFoundException{
-        long room = groupmanagement.createRoom("10.01", 18);
-        assertTrue(room > 0);
-        IRoomData roomData = groupmanagement.getRoomById(room);
-        assertEquals("10.01", roomData.getName());
-    }
+  }
 
-     @Test
-     public void testCreateGroup() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException {
-        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-        assertTrue(createGroup > 0);
-        IGroupData groupData = groupmanagement.getGroupById(createGroup);
-        assertEquals(groupData.getName(),"rote Teufel");
-     }
+  @Test
+  public void testGetAllRoomsSuccess() throws TechnicalProblemException {
+    groupmanagement.deleteAllRooms();
+    groupmanagement.createRoom("blau", 10);
+    groupmanagement.createRoom("grün", 12);
+    Collection<IRoomData> rooms = groupmanagement.getAllRooms();
+    assertTrue(2 == rooms.size());
+  }
 
-     @Test
-     public void testDeleteGroupSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
-         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-         groupmanagement.deleteGroup(createGroup);
-        try {
-            groupmanagement.getGroupById(createGroup);
-            fail("Sollte ein Fehler geworfen werden");
-        } catch (GroupNotFoundException ex) {
-        }
-     }
-
-     @Test
-     public void testDeleteGroupFail() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
-         long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-         boolean deleteGroup = groupmanagement.deleteGroup(createGroup);
-        assertFalse(groupmanagement.deleteGroup(createGroup));
-     }
-
-     @Test
-     public void testGetGroupByIdSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException{
-        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-        IGroupData groupData = groupmanagement.getGroupById(createGroup);
-        assertEquals(GroupType.EARLY, groupData.getGroupType());
-        assertEquals("rote Teufel", groupData.getName());
-     }
-
-     @Test
-     public void testGetGroupByIdFail() throws TechnicalProblemException, RoomNotFoundException{
-        long createGroup = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-          try {
-            groupmanagement.getGroupById(Long.MAX_VALUE);
-            fail("Sollte ein Fehler geworfen werden");
-        } catch (GroupNotFoundException ex) {
-        }
-     }
-
-     @Test
-     public void testDeleteAllGroupsSuccess() throws TechnicalProblemException, GroupNotFoundException, RoomNotFoundException{
-         long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-         long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-         groupmanagement.deleteAllGroups();
-            try {
-            groupmanagement.getGroupById(early);
-            groupmanagement.getGroupById(wholeday);
-            fail("Sollte ein Fehler geworfen werden");
-        } catch (GroupNotFoundException ex) {
-        }
-     }
-
-     @Test
-     public void testGetAllGroupsSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
-         long room = groupmanagement.createRoom("grün", 5);
-         long early = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY,10.00 , "rote Teufel", testroom);
-         long wholeday = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "gruene Teufel", room);
-         long wholeday1 = groupmanagement.createGroup(GroupType.WHOLEDAY, WeekdayType.MONDAY,10.00 , "blaue Teufel", room);
-         long late = groupmanagement.createGroup(GroupType.LATE, WeekdayType.MONDAY,10.00 , "blaue Teufel", testroom);
-         long afternoon = groupmanagement.createGroup(GroupType.AFTERNOON, WeekdayType.MONDAY,10.00 , "lila Teufel", testroom);
-
-         Map<WeekdayType, Map<GroupType,Map<IRoomData, List<IGroupData>>>> groups = groupmanagement.getAllGroups();
-
-         List<IGroupData> roomsMonday = groups.get(WeekdayType.MONDAY).get(GroupType.EARLY).get(groupmanagement.getRoomById(testroom));
-         List<IGroupData> roomsWholeday = groups.get(WeekdayType.MONDAY).get(GroupType.WHOLEDAY).get(groupmanagement.getRoomById(room));
-         List<IGroupData> roomsLate = groups.get(WeekdayType.MONDAY).get(GroupType.LATE).get(groupmanagement.getRoomById(testroom));
-         List<IGroupData> roomsAfternoon = groups.get(WeekdayType.MONDAY).get(GroupType.LATE).get(groupmanagement.getRoomById(testroom));
-
-         assertTrue(roomsMonday.contains(groupmanagement.getGroupById(early)));
-         assertTrue(roomsWholeday.contains(groupmanagement.getGroupById(wholeday)));
-         assertTrue(roomsLate.contains(groupmanagement.getGroupById(late)));
-         assertFalse(roomsLate.contains(groupmanagement.getGroupById(afternoon)));
-         assertTrue(2 == roomsWholeday.size());
-     }
-
-      @Test
-     public void testDeleteAllRoomsSuccess() throws TechnicalProblemException{
-         long room1 = groupmanagement.createRoom("blau", 10);
-         long room2 = groupmanagement.createRoom("grün", 12);
-         groupmanagement.deleteAllRooms();
-             try {
-            groupmanagement.getRoomById(room1);
-            groupmanagement.getRoomById(room2);
-            fail("Sollte ein Fehler geworfen werden");
-        } catch (RoomNotFoundException ex) {
-        }
-         
-     }
-
-     @Test
-     public void testGetAllRoomsSuccess() throws TechnicalProblemException{
-         groupmanagement.deleteAllRooms();
-         groupmanagement.createRoom("blau", 10);
-         groupmanagement.createRoom("grün", 12);
-         Collection<IRoomData> rooms = groupmanagement.getAllRooms();
-         assertTrue(2 == rooms.size());
-     }
-
-     @Test
-     public void testGetWaitingQueueSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException{
-         long groupId = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, testroom, "Glücksbärchies", testroom);
-         IWaitingQueueData queue = groupmanagement.getWaitingQueueByGroupId(groupId);
-         assertTrue(queue != null);
-     }
-
-
+  @Test
+  public void testGetWaitingQueueSuccess() throws TechnicalProblemException, RoomNotFoundException, GroupNotFoundException {
+    long groupId = groupmanagement.createGroup(GroupType.EARLY, WeekdayType.MONDAY, testroom, "Glücksbärchies", testroom);
+    IWaitingQueueData queue = groupmanagement.getWaitingQueueByGroupId(groupId);
+    assertTrue(queue != null);
+  }
 }

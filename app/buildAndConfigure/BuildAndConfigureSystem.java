@@ -1,6 +1,5 @@
 package buildAndConfigure;
 
-
 import businessLogic.customerComponent.CustomerComponent;
 import businessLogic.customerComponent.ICustomermanagement;
 import businessLogic.groupComponent.GroupComponent;
@@ -18,66 +17,59 @@ import rightsManagement.RightsComponent;
 @OnApplicationStart
 public class BuildAndConfigureSystem extends Job<String> {
 
-    private static IRights rights = null;
+  private static IRights rights = null;
+  private static IRightsAdministration rightsAdministration = null;
+  private static IGroupmanagement groupComponent = null;
+  private static ICustomermanagement customerComponent = null;
 
-    private static IRightsAdministration rightsAdministration = null;
+  @Override
+  public void doJob() {
+    buildAndConfigureSystem();
+  }
 
-    private static IGroupmanagement groupComponent = null;
+  @Override
+  public String doJobWithResult() {
+    doJob();
+    return "";
+  }
 
-    private static ICustomermanagement customerComponent = null;
+  public static void buildAndConfigureSystem() {
+    groupComponent = GroupComponent.createComponent();
+    customerComponent = CustomerComponent.createComponent(groupComponent);
+    RightsComponent rightsComponent = RightsComponent.createComponent();
+    rights = rightsComponent;
+    rightsAdministration = rightsComponent;
+  }
 
-    @Override
-    public void doJob() {
-        buildAndConfigureSystem();
-    }
+  /**
+   * Returns the customer compoennt of the system
+   * @return customer component
+   */
+  public static ICustomermanagement getCustomerComponent() {
+    return customerComponent;
+  }
 
-    @Override
-    public String doJobWithResult(){
-        doJob();
-        return "";
-    }
+  /**
+   * Returns the group compoennt of the system
+   * @return group component
+   */
+  public static IGroupmanagement getGroupComponent() {
+    return groupComponent;
+  }
 
-    public static void buildAndConfigureSystem(){
-        groupComponent = GroupComponent.createComponent();
-        customerComponent = CustomerComponent.createComponent(groupComponent);
-        RightsComponent rightsComponent = RightsComponent.createComponent();
-        rights = rightsComponent;
-        rightsAdministration = rightsComponent;
-    }
+  /**
+   * Returns the rightsManagement of the system
+   * @return rights management
+   */
+  public static IRights getRights() {
+    return rights;
+  }
 
-    /**
-     * Returns the customer compoennt of the system
-     * @return customer component
-     */
-    public static ICustomermanagement getCustomerComponent() {
-        return customerComponent;
-    }
-
-    /**
-     * Returns the group compoennt of the system
-     * @return group component
-     */
-    public static IGroupmanagement getGroupComponent() {
-        return groupComponent;
-    }
-
-    /**
-     * Returns the rightsManagement of the system
-     * @return rights management
-     */
-    public static IRights getRights() {
-        return rights;
-    }
-
-    /**
-     * Returns the rightsAdministration of the system
-     * @return rights administration
-     */
-    public static IRightsAdministration getRightsAdministration() {
-        return rightsAdministration;
-    }
-
-    
-
-
+  /**
+   * Returns the rightsAdministration of the system
+   * @return rights administration
+   */
+  public static IRightsAdministration getRightsAdministration() {
+    return rightsAdministration;
+  }
 }

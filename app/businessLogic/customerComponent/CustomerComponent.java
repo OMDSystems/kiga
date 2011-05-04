@@ -12,78 +12,73 @@ import java.util.Date;
  * Represents the customer component
  * @author Admin
  */
-public class CustomerComponent implements ICustomermanagement{
+public class CustomerComponent implements ICustomermanagement {
 
-    /** CRUDUseCase of this component */
-    private CRUDUseCase crudUseCase = null;
-    
-    /** Info and statistics usecase of this component */
-    private InfoAndStatisticsUseCase infoAndStatisticsUseCase = null;
-    
-    /** Singleton instance of this component */
-    private static CustomerComponent instance = null;
-    
+  /** CRUDUseCase of this component */
+  private CRUDUseCase crudUseCase = null;
+  /** Info and statistics usecase of this component */
+  private InfoAndStatisticsUseCase infoAndStatisticsUseCase = null;
+  /** Singleton instance of this component */
+  private static CustomerComponent instance = null;
 
-    /** Should not be used */
-    private CustomerComponent(){
+  /** Should not be used */
+  private CustomerComponent() {
+  }
+
+  /**
+   * Creates the customer component
+   * @param groupmanagement
+   */
+  private CustomerComponent(IGroupmanagement groupmanagement) {
+    this.crudUseCase = CRUDUseCase.createCRUDUseCase();
+    this.infoAndStatisticsUseCase = InfoAndStatisticsUseCase.createUseCase(groupmanagement, crudUseCase);
+  }
+
+  /**
+   * Creates the customer component
+   * @return component
+   */
+  public static CustomerComponent createComponent(IGroupmanagement groupmanagement) {
+    if (instance == null) {
+      instance = new CustomerComponent(groupmanagement);
     }
+    return instance;
+  }
 
-    /**
-     * Creates the customer component
-     * @param groupmanagement
-     */
-    private CustomerComponent(IGroupmanagement groupmanagement){
-        this.crudUseCase = CRUDUseCase.createCRUDUseCase();
-        this.infoAndStatisticsUseCase = InfoAndStatisticsUseCase.createUseCase(groupmanagement, crudUseCase);
-    }
+  public boolean isValidChildData(String name, String familyName, Date dateofBirth, String allergies, AdressType adress) {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 
-    /**
-     * Creates the customer component
-     * @return component
-     */
-    public static CustomerComponent createComponent(IGroupmanagement groupmanagement){
-        if(instance == null){
-            instance = new CustomerComponent(groupmanagement);
-        } 
-        return instance;
-    }
+  public long createChild(String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException {
+    return crudUseCase.createChild(name, familyName, dateofBirth, allergies, adress);
+  }
 
-    public boolean isValidChildData(String name, String familyName, Date dateofBirth, String allergies, AdressType adress) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  public boolean deleteChild(long id) throws TechnicalProblemException {
+    return crudUseCase.deleteChild(id);
+  }
 
-    public long createChild(String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException {
-        return crudUseCase.createChild(name, familyName, dateofBirth, allergies, adress);
-    }
+  public IChildData getChildData(long id) throws ChildNotFoundException {
+    return crudUseCase.getChildData(id);
+  }
 
-    public boolean deleteChild(long id) throws TechnicalProblemException {
-        return crudUseCase.deleteChild(id);
-    }
+  public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException, ChildNotFoundException {
+    return crudUseCase.updateChild(id, name, familyName, dateofBirth, allergies, adress);
+  }
 
-    public IChildData getChildData(long id) throws ChildNotFoundException {
-        return crudUseCase.getChildData(id);
-    }
+  public void deleteAllChildren() {
+    crudUseCase.deleteAllChildren();
+  }
 
-    public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException,ChildNotFoundException {
-        return crudUseCase.updateChild(id, name, familyName, dateofBirth, allergies, adress);
-    }
+  public Collection<IChildData> getAllChildren() {
+    return crudUseCase.getAllChildren();
+  }
 
-    public void deleteAllChildren() {
-        crudUseCase.deleteAllChildren();
-    }
+  public boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, ChildNotFoundException, GroupNotFoundException {
+    return infoAndStatisticsUseCase.assignChildToGroup(childId, groupId);
+  }
 
-    public Collection<IChildData> getAllChildren() {
-        return crudUseCase.getAllChildren();
-    }
-
-    public boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, ChildNotFoundException, GroupNotFoundException {
-        return infoAndStatisticsUseCase.assignChildToGroup(childId,groupId);
-    }
-
-    public Collection<IChildData> getAllChildrenForGroup(long groupId) throws GroupNotFoundException{
+  public Collection<IChildData> getAllChildrenForGroup(long groupId) {
 //        throw new UnsupportedOperationException("Not supported yet.");
-        return infoAndStatisticsUseCase.getAllChildrenForGroup(groupId);
-    }
-
-
+    return crudUseCase.getAllChildrenForGroup(groupId);
+  }
 }

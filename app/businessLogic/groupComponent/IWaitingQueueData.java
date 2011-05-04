@@ -9,11 +9,9 @@ import java.util.List;
  */
 public interface IWaitingQueueData {
 
-
-    /**
-     *
-     * @return List of Children in Queue. Index is position in queue
-     */
-    public List<Long> getChildInWaitingQueue();
-
+  /**
+   *
+   * @return List of Children in Queue. Index is position in queue
+   */
+  public List<Long> getChildInWaitingQueue();
 }

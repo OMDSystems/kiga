@@ -6,5 +6,5 @@ package rightsManagement;
  */
 public interface IRightsAdministration {
 
-    void addUser(String username, String password, UsergroupType group) throws InvalidUsernameException, InvalidPasswordException;
+  void addUser(String username, String password, UsergroupType group) throws InvalidUsernameException, InvalidPasswordException;
 }

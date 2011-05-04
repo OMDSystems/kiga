@@ -6,17 +6,17 @@ package businessLogic.zeroType;
  */
 public class ChildNotFoundException extends Exception {
 
-    /**
-     * Creates a new instance of <code>ChildNotFoundException</code> without detail message.
-     */
-    public ChildNotFoundException() {
-    }
+  /**
+   * Creates a new instance of <code>ChildNotFoundException</code> without detail message.
+   */
+  public ChildNotFoundException() {
+  }
 
-    /**
-     * Constructs an instance of <code>ChildNotFoundException</code> with the specified detail message.
-     * @param msg the detail message.
-     */
-    public ChildNotFoundException(String msg) {
-        super(msg);
-    }
+  /**
+   * Constructs an instance of <code>ChildNotFoundException</code> with the specified detail message.
+   * @param msg the detail message.
+   */
+  public ChildNotFoundException(String msg) {
+    super(msg);
+  }
 }

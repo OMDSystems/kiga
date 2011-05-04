@@ -2,6 +2,7 @@ package businessLogic.customerComponent;
 
 import businessLogic.groupComponent.GroupEntity;
 import businessLogic.zeroType.AdressType;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,149 +23,133 @@ import play.db.jpa.Model;
  * @author Marvin
  */
 @Entity
-public class ChildEntity extends Model implements IChildData{
+public class ChildEntity extends Model implements IChildData {
 
-    private String name;
-    
-    private String familyName;
-    
-    private Date dateOfBirth;
-    
-    private String allergies;
-    
-    private AdressType adress;
+  private String name;
+  private String familyName;
+  private Date dateOfBirth;
+  private String allergies;
+  private AdressType adress;
+  @ManyToMany
+  private Collection<GroupEntity> groups;
 
+  /**
+   * Creates a new child
+   * @param name
+   * @param familyName
+   * @param dateOfBirth
+   * @param allergies
+   * @param adress
+   */
+  public ChildEntity(String name, String familyName, Date dateOfBirth, String allergies, AdressType adress) {
+    this.name = name;
+    this.familyName = familyName;
+    this.dateOfBirth = dateOfBirth;
+    this.allergies = allergies;
+    this.adress = adress;
+    this.groups = new ArrayList<GroupEntity>();
+  }
 
-//    @MapsId("groupEntity")
-//    @JoinColumn(name="group_fk", referencedColumnName="id")
-    @ManyToMany(
-        targetEntity=GroupEntity.class,
-        cascade={CascadeType.ALL}
-    )
-    @JoinTable(
-        name="CHILD_GROUP",
-        joinColumns=@JoinColumn(name="CHILD_ID",referencedColumnName="ID"),
-        inverseJoinColumns=@JoinColumn(name="GROUP_ID",referencedColumnName="ID")
-    )
-    private Collection<Long> groups;
+  public AdressType getAdress() {
+    return adress;
+  }
 
-    /**
-     * Creates a new child
-     * @param name
-     * @param familyName
-     * @param dateOfBirth
-     * @param allergies
-     * @param adress 
-     */
-    public ChildEntity(String name, String familyName, Date dateOfBirth, String allergies, AdressType adress) {
-        this.name = name;
-        this.familyName = familyName;
-        this.dateOfBirth = dateOfBirth;
-        this.allergies = allergies;
-        this.adress = adress;
-        this.groups = new LinkedList<Long> ();
+  public void setAdress(AdressType adress) {
+    this.adress = adress;
+  }
+
+  public String getAllergies() {
+    return allergies;
+  }
+
+  public void setAllergies(String allergies) {
+    this.allergies = allergies;
+  }
+
+  public Date getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public void setDateOfBirth(Date dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public String getFamilyName() {
+    return familyName;
+  }
+
+  public void setFamilyName(String familyName) {
+    this.familyName = familyName;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Collection<Long> getGroups() {
+    List<Long> result = new ArrayList<Long>();
+    for (GroupEntity groupEntity : groups) {
+      result.add(groupEntity.getId());
     }
+    return result;
+  }
 
-    public AdressType getAdress() {
-        return adress;
+  boolean addGroup(GroupEntity group) {
+    if (getGroups().contains(group.getId())) {
+      return false;
+    } else {
+      return groups.add(group);
     }
+  }
 
-    public void setAdress(AdressType adress) {
-        this.adress = adress;
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    public String getAllergies() {
-        return allergies;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
-
-    public void setAllergies(String allergies) {
-        this.allergies = allergies;
+    final ChildEntity other = (ChildEntity) obj;
+    if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+      return false;
     }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    if ((this.familyName == null) ? (other.familyName != null) : !this.familyName.equals(other.familyName)) {
+      return false;
     }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    if ((this.allergies == null) ? (other.allergies != null) : !this.allergies.equals(other.allergies)) {
+      return false;
     }
-
-    public String getFamilyName() {
-        return familyName;
+    if (this.adress != other.adress && (this.adress == null || !this.adress.equals(other.adress))) {
+      return false;
     }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    if (this.dateOfBirth != other.dateOfBirth && (this.dateOfBirth == null || !this.dateOfBirth.equals(other.dateOfBirth))) {
+      return false;
     }
-
-    public String getName() {
-        return name;
+    if (this.groups != other.groups && (this.groups == null || !this.groups.equals(other.groups))) {
+      return false;
     }
+    return true;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 83 * hash + (this.name != null ? this.name.hashCode() : 0);
+    hash = 83 * hash + (this.familyName != null ? this.familyName.hashCode() : 0);
+    hash = 83 * hash + (this.dateOfBirth != null ? this.dateOfBirth.hashCode() : 0);
+    hash = 83 * hash + (this.allergies != null ? this.allergies.hashCode() : 0);
+    hash = 83 * hash + (this.adress != null ? this.adress.hashCode() : 0);
+    hash = 83 * hash + (this.groups != null ? this.groups.hashCode() : 0);
+    return hash;
+  }
 
-    public Collection<Long> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<Long> groups) {
-        this.groups = groups;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ChildEntity other = (ChildEntity) obj;
-        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
-            return false;
-        }
-        if ((this.familyName == null) ? (other.familyName != null) : !this.familyName.equals(other.familyName)) {
-            return false;
-        }
-        if ((this.allergies == null) ? (other.allergies != null) : !this.allergies.equals(other.allergies)) {
-            return false;
-        }
-        if (this.adress != other.adress && (this.adress == null || !this.adress.equals(other.adress))) {
-            return false;
-        }
-        if (this.dateOfBirth != other.dateOfBirth && (this.dateOfBirth == null || !this.dateOfBirth.equals(other.dateOfBirth))) {
-            return false;
-        }
-        if (this.groups != other.groups && (this.groups == null || !this.groups.equals(other.groups))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 83 * hash + (this.familyName != null ? this.familyName.hashCode() : 0);
-        hash = 83 * hash + (this.dateOfBirth != null ? this.dateOfBirth.hashCode() : 0);
-        hash = 83 * hash + (this.allergies != null ? this.allergies.hashCode() : 0);
-        hash = 83 * hash + (this.adress != null ? this.adress.hashCode() : 0);
-        hash = 83 * hash + (this.groups != null ? this.groups.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public long getChildId() {
-        return this.getId();
-    }
-
-    
-    
-
-    
-    
-    
-    
+  @Override
+  public long getChildId() {
+    return this.getId();
+  }
 }

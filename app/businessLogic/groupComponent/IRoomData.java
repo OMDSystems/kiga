@@ -6,25 +6,21 @@ package businessLogic.groupComponent;
  */
 public interface IRoomData {
 
+  /**
+   *
+   * @return Id of the Room
+   */
+  long getRoomId();
 
-    /**
-     *
-     * @return Id of the Room
-     */
-    long getRoomId();
+  /**
+   *
+   * @return name of the room
+   */
+  String getName();
 
-
-    /**
-     *
-     * @return name of the room
-     */
-    String getName();
-
-
-    /**
-     *
-     * @return capacity of the room
-     */
-    int getCapacity();
-
+  /**
+   *
+   * @return capacity of the room
+   */
+  int getCapacity();
 }

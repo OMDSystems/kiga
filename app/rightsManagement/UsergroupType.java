@@ -6,11 +6,10 @@ package rightsManagement;
  */
 public enum UsergroupType {
 
-    MANAGER, PARENT;
+  MANAGER, PARENT;
 
-    @Override
-    public String toString(){
-        return super.name().toLowerCase();
-    }
-
+  @Override
+  public String toString() {
+    return super.name().toLowerCase();
+  }
 }
