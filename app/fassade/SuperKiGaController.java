@@ -2,7 +2,7 @@ package fassade;
 
 import businessLogic.customerComponent.ICustomermanagement;
 import businessLogic.groupComponent.IGroupmanagement;
-import play.mvc.Controller;
+import play.mvc.*;
 
 /**
  * Controller that has the components of the systems
@@ -30,6 +30,9 @@ public class SuperKiGaController extends Controller {
         return groupmanagement;
     }
 
-
+    @Before
+    static void authorize() {
+      // TODO: implement authorization stuff
+    }
 
 }

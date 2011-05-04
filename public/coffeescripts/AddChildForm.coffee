@@ -49,8 +49,13 @@ class AddChildForm extends Ext.form.FormPanel
             form = Ext.getCmp('addChildForm')
             form.getForm().submit(
               url: '/children'
-              success: this.onFormSubmissionDone
-              failure: this.onFormSubmissionDone
+              success: (form, action) ->
+                window = Ext.getCmp('addChildView')
+                window.close()
+                childrenStore = Ext.StoreMgr.get('childrenStore')
+                childrenStore.add([new ChildRecord(action.result.data)])
+              failure: (form, action) ->
+                Ext.Msg.alert("error", action.result.msg)
             )
         ,
           text: 'Cancel'
@@ -61,6 +66,3 @@ class AddChildForm extends Ext.form.FormPanel
       hideLabels: false,
       labelAlign: 'left',
       labelPad: 8)
-
-  onFormSubmissionDone: (form, action) ->
-    console.debug('dsd')

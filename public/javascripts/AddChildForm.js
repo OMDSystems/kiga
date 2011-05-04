@@ -63,8 +63,16 @@ AddChildForm = (function() {
             form = Ext.getCmp('addChildForm');
             return form.getForm().submit({
               url: '/children',
-              success: this.onFormSubmissionDone,
-              failure: this.onFormSubmissionDone
+              success: function(form, action) {
+                var childrenStore, window;
+                window = Ext.getCmp('addChildView');
+                window.close();
+                childrenStore = Ext.StoreMgr.get('childrenStore');
+                return childrenStore.add([new ChildRecord(action.result.data)]);
+              },
+              failure: function(form, action) {
+                return Ext.Msg.alert("error", action.result.msg);
+              }
             });
           }
         }, {
@@ -81,8 +89,5 @@ AddChildForm = (function() {
       labelPad: 8
     });
   }
-  AddChildForm.prototype.onFormSubmissionDone = function(form, action) {
-    return console.debug('dsd');
-  };
   return AddChildForm;
 })();

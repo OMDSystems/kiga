@@ -29,9 +29,9 @@ ChildrenView = (function() {
       }),
       items: [
         {
-          height: 200,
           title: 'foo',
           xtype: 'grid',
+          autoHeight: true,
           cm: new Ext.grid.ColumnModel({
             defaults: {
               width: 120,
@@ -43,7 +43,8 @@ ChildrenView = (function() {
               }, {
                 header: 'First Name'
               }, {
-                header: 'Date of Birth'
+                header: 'Date of Birth',
+                renderer: Ext.util.Format.dateRenderer('d.m.Y')
               }, {
                 header: 'Allergies'
               }, {
@@ -58,9 +59,16 @@ ChildrenView = (function() {
           selModel: {
             singleSelect: true
           },
-          store: new Ext.data.ArrayStore({
-            fields: ['id', 'name'],
-            data: [[1, 'Alice'], [2, 'Bill'], [3, 'Carly']]
+          store: new Ext.data.JsonStore({
+            id: 'childrenStore',
+            url: '/children',
+            fields: [
+              'familyName', 'name', {
+                name: 'dateOfBirth',
+                type: 'date',
+                format: 'd.m.Y'
+              }, 'allergies', 'street', 'zip', 'town'
+            ]
           })
         }
       ]
