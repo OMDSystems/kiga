@@ -6,9 +6,9 @@ import businessLogic.groupComponent.GroupComponent;
 import businessLogic.groupComponent.IGroupmanagement;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
-import rightsManagement.IRights;
-import rightsManagement.IRightsAdministration;
-import rightsManagement.RightsComponent;
+import rightsManagementProxy.IRights;
+import rightsManagementProxy.IRightsAdministration;
+import rightsManagementProxy.RightsComponent;
 
 /**
  * Builds business logic and configures Controllers in fassade via dependency injection

@@ -26,6 +26,40 @@ maolwi
 
 488d8287-22a4-41ea-a663-46105ccf35b3
 
+CRUDUseCase.java
+file
+
+
+
+delete
+2011-04-13T21:35:31.000000Z
+d408747f2c59713eb9331850d0022451
+2011-04-13T15:58:24.967893Z
+43
+maolwi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3255
+
 GroupComponent.java
 file
 
@@ -59,6 +93,63 @@ maolwi
 
 
 1979
+
+GroupDAO.java
+file
+
+
+
+add
+
+6116d8febca8a079fa377a8da01d8b18
+
+
+
+
+
+
+
+
+
+
+
+copied
+https://kiga.svn.sourceforge.net/svnroot/kiga/app/businessLogic/groupComponent/CRUDUseCase.java
+43
+
+GroupEntity.java
+file
+
+
+
+
+2011-04-13T21:35:31.000000Z
+491cc23dcd4a22281c28ca70a5a3651b
+2011-04-13T12:19:35.322824Z
+41
+maolwi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2630
 
 IGroupData.java
 file
@@ -127,72 +218,4 @@ maolwi
 
 
 2352
-
-CRUDUseCase.java
-file
-
-
-
-
-2011-04-13T21:35:31.000000Z
-d408747f2c59713eb9331850d0022451
-2011-04-13T15:58:24.967893Z
-43
-maolwi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3255
-
-GroupEntity.java
-file
-
-
-
-
-2011-04-13T21:35:31.000000Z
-491cc23dcd4a22281c28ca70a5a3651b
-2011-04-13T12:19:35.322824Z
-41
-maolwi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2630
 

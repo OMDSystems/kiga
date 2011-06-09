@@ -26,6 +26,40 @@ maolwi
 
 488d8287-22a4-41ea-a663-46105ccf35b3
 
+CRUDUseCase.java
+file
+
+
+
+delete
+2011-04-12T21:11:03.000000Z
+deced3dc5db00c89a5b0effcf9eb24d0
+2011-04-12T16:39:37.475002Z
+33
+a-knopf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2352
+
 ChildEntity.java
 file
 
@@ -59,40 +93,6 @@ a-knopf
 
 
 3925
-
-InfoAndStatisticsUseCase.java
-file
-
-
-
-
-2011-04-12T21:11:03.000000Z
-241035abae71a3f574bc76675bc51367
-2011-04-12T16:43:35.195307Z
-34
-a-knopf
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2769
 
 CustomerComponent.java
 file
@@ -128,17 +128,14 @@ maolwi
 
 3106
 
-CRUDUseCase.java
+CustomerDAO.java
 file
 
 
 
+add
 
-2011-04-12T21:11:03.000000Z
-deced3dc5db00c89a5b0effcf9eb24d0
-2011-04-12T16:39:37.475002Z
-33
-a-knopf
+6da41560d0c243888de59cdd99ff95ac
 
 
 
@@ -150,17 +147,9 @@ a-knopf
 
 
 
-
-
-
-
-
-
-
-
-
-
-2352
+copied
+https://kiga.svn.sourceforge.net/svnroot/kiga/app/businessLogic/customerComponent/CRUDUseCase.java
+43
 
 IChildData.java
 file
@@ -229,4 +218,38 @@ maolwi
 
 
 3529
+
+InfoAndStatisticsUseCase.java
+file
+
+
+
+
+2011-04-12T21:11:03.000000Z
+241035abae71a3f574bc76675bc51367
+2011-04-12T16:43:35.195307Z
+34
+a-knopf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2769
 

@@ -18,13 +18,13 @@ class InfoAndStatisticsUseCase {
   private static InfoAndStatisticsUseCase instance = null;
   /** Neighbour component groupmanagement */
   private IGroupmanagement groupmanagement = null;
-  /** CRUDUseCase of this component */
-  private CRUDUseCase crudUseCase = null;
+  /** CustomerDAO of this component */
+  private CustomerDAO crudUseCase = null;
 
   private InfoAndStatisticsUseCase() {
   }
 
-  private InfoAndStatisticsUseCase(IGroupmanagement groupmanagement, CRUDUseCase crudUseCase) {
+  private InfoAndStatisticsUseCase(IGroupmanagement groupmanagement, CustomerDAO crudUseCase) {
     this.groupmanagement = groupmanagement;
     this.crudUseCase = crudUseCase;
   }
@@ -33,7 +33,7 @@ class InfoAndStatisticsUseCase {
    * Creates the Usecase
    * @param groupmanagement Neighbour component groupmanagement
    */
-  public static InfoAndStatisticsUseCase createUseCase(IGroupmanagement groupmanagement, CRUDUseCase crudUseCase) {
+  public static InfoAndStatisticsUseCase createUseCase(IGroupmanagement groupmanagement, CustomerDAO crudUseCase) {
     if (instance == null) {
       instance = new InfoAndStatisticsUseCase(groupmanagement, crudUseCase);
     }

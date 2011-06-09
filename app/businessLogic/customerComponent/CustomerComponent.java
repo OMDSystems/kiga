@@ -1,6 +1,8 @@
 package businessLogic.customerComponent;
 
 import businessLogic.groupComponent.IGroupmanagement;
+import businessLogic.mocks.financialComponent.IInvoiceData;
+import businessLogic.mocks.financialComponent.MockUseCase;
 import businessLogic.zeroType.AdressType;
 import businessLogic.zeroType.ChildNotFoundException;
 import businessLogic.zeroType.GroupNotFoundException;
@@ -14,8 +16,8 @@ import java.util.Date;
  */
 public class CustomerComponent implements ICustomermanagement {
 
-  /** CRUDUseCase of this component */
-  private CRUDUseCase crudUseCase = null;
+  /** CustomerDAO of this component */
+  private CustomerDAO customerDAO = null;
   /** Info and statistics usecase of this component */
   private InfoAndStatisticsUseCase infoAndStatisticsUseCase = null;
   /** Singleton instance of this component */
@@ -30,8 +32,8 @@ public class CustomerComponent implements ICustomermanagement {
    * @param groupmanagement
    */
   private CustomerComponent(IGroupmanagement groupmanagement) {
-    this.crudUseCase = CRUDUseCase.createCRUDUseCase();
-    this.infoAndStatisticsUseCase = InfoAndStatisticsUseCase.createUseCase(groupmanagement, crudUseCase);
+    this.customerDAO = CustomerDAO.createCRUDUseCase();
+    this.infoAndStatisticsUseCase = InfoAndStatisticsUseCase.createUseCase(groupmanagement, customerDAO);
   }
 
   /**
@@ -50,27 +52,27 @@ public class CustomerComponent implements ICustomermanagement {
   }
 
   public long createChild(String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException {
-    return crudUseCase.createChild(name, familyName, dateofBirth, allergies, adress);
+    return customerDAO.createChild(name, familyName, dateofBirth, allergies, adress);
   }
 
   public boolean deleteChild(long id) throws TechnicalProblemException {
-    return crudUseCase.deleteChild(id);
+    return customerDAO.deleteChild(id);
   }
 
   public IChildData getChildData(long id) throws ChildNotFoundException {
-    return crudUseCase.getChildData(id);
+    return customerDAO.getChildData(id);
   }
 
   public boolean updateChild(long id, String name, String familyName, Date dateofBirth, String allergies, AdressType adress) throws TechnicalProblemException, ChildNotFoundException {
-    return crudUseCase.updateChild(id, name, familyName, dateofBirth, allergies, adress);
+    return customerDAO.updateChild(id, name, familyName, dateofBirth, allergies, adress);
   }
 
   public void deleteAllChildren() {
-    crudUseCase.deleteAllChildren();
+    customerDAO.deleteAllChildren();
   }
 
   public Collection<IChildData> getAllChildren() {
-    return crudUseCase.getAllChildren();
+    return customerDAO.getAllChildren();
   }
 
   public boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, ChildNotFoundException, GroupNotFoundException {
@@ -78,7 +80,10 @@ public class CustomerComponent implements ICustomermanagement {
   }
 
   public Collection<IChildData> getAllChildrenForGroup(long groupId) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-    return crudUseCase.getAllChildrenForGroup(groupId);
+    return customerDAO.getAllChildrenForGroup(groupId);
+  }
+
+  public Collection<IInvoiceData> getInvoicesOfCurrentMonth() throws TechnicalProblemException {
+    return MockUseCase.getInvoicesOfCurrentMonth();
   }
 }

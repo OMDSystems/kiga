@@ -16,10 +16,10 @@ import java.util.Map;
 public class GroupComponent implements IGroupmanagement {
 
   private static GroupComponent groupComponent = null;
-  private CRUDUseCase crudusecase = null;
+  private GroupDAO crudusecase = null;
 
   private GroupComponent() {
-    this.crudusecase = CRUDUseCase.createCRUDUseCase();
+    this.crudusecase = GroupDAO.createCRUDUseCase();
   }
 
   ;

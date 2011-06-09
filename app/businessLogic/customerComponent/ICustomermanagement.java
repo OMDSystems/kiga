@@ -1,11 +1,13 @@
 package businessLogic.customerComponent;
 
+import businessLogic.mocks.financialComponent.IInvoiceData;
 import businessLogic.zeroType.AdressType;
 import businessLogic.zeroType.ChildNotFoundException;
 import businessLogic.zeroType.GroupNotFoundException;
 import businessLogic.zeroType.TechnicalProblemException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Methods for management of children
@@ -96,4 +98,10 @@ public interface ICustomermanagement {
    * @throws ChildNotFoundException if childId not valid
    */
   boolean assignChildToGroup(long childId, long groupId) throws TechnicalProblemException, GroupNotFoundException, ChildNotFoundException;
+  
+  /**
+   * Returns all invoices for the current month
+   * @return Empty Collection if no invoices for this month
+   */
+  Collection<IInvoiceData> getInvoicesOfCurrentMonth() throws TechnicalProblemException;
 }

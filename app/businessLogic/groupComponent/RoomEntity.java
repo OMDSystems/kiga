@@ -11,7 +11,7 @@ import play.db.jpa.Model;
 class RoomEntity extends Model implements IRoomData {
 
   private String name;
-  private int capacity;
+  private Integer capacity;
 
   public RoomEntity(String name, int capacity) {
     this.name = name;
