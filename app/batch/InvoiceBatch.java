@@ -25,6 +25,9 @@ import play.jobs.On;
 @On("59 59 23 * * ?") // This means "every day at 1 second before midnight"; We manualy check if its the last day of month
 public class InvoiceBatch extends Job{
   
+  /** Force batch to be run whenever method is called (for testing) */
+  private boolean alwaysRunBatch = false;
+  
   private final MessageProxy messageProxy;
 
   public InvoiceBatch() {
@@ -44,7 +47,7 @@ public class InvoiceBatch extends Job{
   private boolean todayIsLastDayOfMonth() {
     GregorianCalendar gregorianCalendar = new GregorianCalendar();
     int lastDayOfMonth = gregorianCalendar.getActualMaximum(Calendar.DATE);
-    return Calendar.DAY_OF_MONTH == lastDayOfMonth;
+    return Calendar.DAY_OF_MONTH == lastDayOfMonth || alwaysRunBatch;
   }
 
   private void sendInvoicesToHamburgerKindergaerten() {
