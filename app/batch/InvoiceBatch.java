@@ -21,8 +21,8 @@ import play.jobs.On;
  *
  * @author Marvin
  */
-//@Every("5s")
-@On("59 59 23 * * ?") // This means "every day at 1 second before midnight"; We manualy check if its the last day of month
+@Every("5s")
+//@On("59 59 23 * * ?") // This means "every day at 1 second before midnight"; We manualy check if its the last day of month
 public class InvoiceBatch extends Job{
   
   /** Force batch to be run whenever method is called (for testing) */

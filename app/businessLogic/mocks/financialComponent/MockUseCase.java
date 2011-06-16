@@ -20,9 +20,9 @@ public class MockUseCase {
     Set<IInvoiceData> result = new HashSet<IInvoiceData>();
     
     result.add(new InvoiceEntity(1l, "Marvin", "Ede", 47.11d));
-    result.add(new InvoiceEntity(1l, "Oliver", "Willhoeft", 471.1d));
-    result.add(new InvoiceEntity(1l, "Dario", "Rexin", 4.71d));
-    result.add(new InvoiceEntity(1l, "Stefan", "Sarstedt", 4711d));
+    result.add(new InvoiceEntity(2l, "Oliver", "Willhoeft", 471.1d));
+    result.add(new InvoiceEntity(3l, "Dario", "Rexin", 4.71d));
+    result.add(new InvoiceEntity(4l, "Stefan", "Sarstedt", 4711d));
     
     return result;
     
