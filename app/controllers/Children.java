@@ -58,12 +58,10 @@ public class Children extends SuperKiGaController {
         params.get("allergies"),
         address
       );
-      String child = serializer.serialize(getCustomermanagement().getChildData(childID));
-      boolean success = true;
-      renderTemplate("Children/show.json", child, success);
+      ok();
     } catch (Exception e) {
-      String msg = serializer.serialize(e.getMessage());
-      renderTemplate("Application/error.json", msg);
+      System.out.println(e.getMessage());
+      error();
     }
   }
 }
