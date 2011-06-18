@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+
+<table id="children_table">
+  <thead>
+    <tr>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Date of Birth</th>
+      <th>Allergies</th>
+      <th>Street</th>
+      <th>Zip</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody>
+    #{list items:children, as:'child'}
+      <tr>
+        <td>${child.familyName}</td>
+        <td>${child.name}</td>
+        <td>${child.dateOfBirth}</td>
+        <td>${child.allergies}</td>
+        <td>${child.adress.street} ${child.adress.houseNumber}</td>
+        <td>${child.adress.zip}</td>
+        <td>${child.adress.town}</td>
+      </tr>
+    #{/list}
+  </tbody>
+</table>
+
+

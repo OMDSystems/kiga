@@ -24,7 +24,7 @@ public class Children extends SuperKiGaController {
   public static void index() {
     Collection<IChildData> children = getCustomermanagement().getAllChildren();
     //renderTemplate("Children/list.json", children);
-    renderJSON(children);
+    render(children);
   }
 
   public static void show(long id) {

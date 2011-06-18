@@ -5,12 +5,12 @@
 # Home page
 GET     /                                       Application.index
 
-GET     /{check}                                Application.check
+GET     /check                                  Application.check
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-GET     /{controller}/?                         {controller}.index
+GET     /{controller}(/(index)?)?               {controller}.index
 GET     /{controller}/{id}                      {controller}.show({id})
 POST    /{controller}/?                         {controller}.create
 PUT     /{controller}/?                         {controller}.update

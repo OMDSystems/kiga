@@ -1,0 +1,33 @@
+#menu_area {
+  float: left;
+  margin-right: 30px;
+}
+
+#main_area {
+}
+
+table {
+  border: 1px solid #dedede;
+  border-collapse: collapse;
+}
+
+table th {
+  border-bottom: 1px solid #dedede;
+  height: 30px;
+  background: #ffa912;
+  padding: 0px 5px 0px 5px;
+}
+
+table td {
+  border-bottom: 1px solid #dedede;
+  height: 25px;
+  padding: 0px 5px 0px 5px;
+}
+
+table tr {
+  background: #ededed;
+}
+
+table tr:hover {
+  background: #cacaca;
+}
