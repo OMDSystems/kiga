@@ -27,33 +27,63 @@ $(function() {
            "&city=" + city.val();
   }
 
+  function submitForm() {
+    $.ajax({
+      type: "POST",
+      url: "/children",
+      data: formUrlEncoded(),
+      success: function(msg) {
+        $( "#children-table tbody" ).append( "<tr>" +
+          "<td>" + last_name.val() + "</td>" +
+          "<td>" + first_name.val() + "</td>" +
+          "<td>" + date_of_birth.val() + "</td>" +
+          "<td>" + allergies.val() + "</td>" +
+          "<td>" + street.val() + " " + street_number.value + "</td>" +
+          "<td>" + zip.val() + "</td>" +
+          "<td>" + city.val() + "</td>" +
+          "</tr>" );
+        $( "#dialog-form" ).dialog( "close" );
+      },
+      error: function(error) {
+        if(error.status == 0) {
+          tips.text("Server unreachable.");
+        } else if(error.status == 500) {
+          tips.text("Internal server error.");
+        } else {
+          tips.text("Unknown error.");
+        }
+        $("#dialog-form").animate({scrollTop:0}, 300);
+        tips.addClass( "ui-state-highlight" );
+        setTimeout(function() {
+          tips.removeClass( "ui-state-highlight", 1500 );
+        }, 500 );
+      }
+    });
+  }
+
+  function checkFormValidity() {
+    var bValid = true;
+    allFields.each(function(index, field) {
+      if(!field.checkValidity()) {
+        $(field).addClass("invalid-input");
+        bValid = false;
+      }
+    });
+    setTimeout(function() {
+      allFields.removeClass( "invalid-input", 500 );
+    }, 1000);
+    return bValid;
+  }
+
   $( "#dialog-form" ).dialog({
     autoOpen: false,
-    height: 300,
-    width: 350,
+    height: 700,
+    width: 550,
     modal: true,
     buttons: {
       "Create an account": function() {
-        var bValid = true;
-        allFields.removeClass( "ui-state-error" );
-        if ( bValid ) {
-          $.ajax({
-            type: "POST",
-            url: "/children",
-            data: formUrlEncoded(),
-            success: function(msg){
-              $( "#children-table tbody" ).append( "<tr>" +
-                "<td>" + last_name.val() + "</td>" +
-                "<td>" + first_name.val() + "</td>" +
-                "<td>" + date_of_birth.val() + "</td>" +
-                "<td>" + allergies.val() + "</td>" +
-                "<td>" + street.val() + " " + street_number.value + "</td>" +
-                "<td>" + zip.val() + "</td>" +
-                "<td>" + city.val() + "</td>" +
-                "</tr>" );
-              $( "#dialog-form" ).dialog( "close" );
-            }
-          });
+        if ( checkFormValidity() ) {
+          submitForm();
         }
       },
       Cancel: function() {

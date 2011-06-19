@@ -1,25 +1,25 @@
 <div id="dialog-form" title="Create new child">
-  <p class="validateTips">All form fields are required.</p>
+  <p class="validateTips"></p>
   <form>
     <fieldset>
       <label for="first_name">First Name</label>
-      <input type="text" name="first_name" id="first_name" class="text ui-widget-content ui-corner-all" />
+      <input type="text" name="first_name" id="first_name" required="required" class="text ui-widget-content ui-corner-all" />
       <label for="last_name">Last Name</label>
-      <input type="text" name="last_name" id="last_name" class="text ui-widget-content ui-corner-all" />
+      <input type="text" name="last_name" id="last_name" required="required" class="text ui-widget-content ui-corner-all" />
       <label for="date_of_birth">Date of Birth</label>
-      <input type="text" name="date_of_birth" id="date_of_birth" value="" class="text ui-widget-content ui-corner-all" />
+      <input type="text" name="date_of_birth" id="date_of_birth" required="required" value="" class="text ui-widget-content ui-corner-all" />
       <label for="allergies">Allergies</label>
       <textarea name="allegies" id="allergies" value="" class="textarea ui-widget-content ui-corner-all"></textarea>
       <label for="street">Street</label>
-      <input type="text" name="street" id="street" value="" class="text ui-widget-content ui-corner-all" />
+      <input type="text" name="street" id="street" value="" required="required" class="text ui-widget-content ui-corner-all" />
       <label for="street_number">Street Number</label>
-      <input type="text" name="street_number" id="street_number" value="" class="text ui-widget-content ui-corner-all" />
+      <input type="text" name="street_number" id="street_number" pattern="[1-9][0-9]*\s?[a-z]?" required="required" value="" class="text ui-widget-content ui-corner-all" />
       <label for="additional">Additional</label>
       <input type="text" name="additional" id="additional" value="" class="text ui-widget-content ui-corner-all" />
       <label for="zip">Zip</label>
-      <input type="number" name="zip" id="zip" value="" class="text ui-widget-content ui-corner-all" />
+      <input type="text" pattern="[1-9][0-9]{4}" required="required" name="zip" id="zip" value="" class="text ui-widget-content ui-corner-all" />
       <label for="city">City</label>
-      <input type="text" name="city" id="city" value="" class="text ui-widget-content ui-corner-all" />
+      <input type="text" name="city" id="city" required="required" value="" class="text ui-widget-content ui-corner-all" />
     </fieldset>
   </form>
 </div>
