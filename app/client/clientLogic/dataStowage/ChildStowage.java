@@ -54,7 +54,7 @@ public class ChildStowage {
   }
 
   /**
-   * {@link ICustomermanagement.getChildData }
+   * {@link .ICustomermanagement::getChildData(long id)}
    */
   public IChildData getChildData(long id) throws ChildNotFoundException, TechnicalProblemException{
     if (childCache.containsKey(id)) {

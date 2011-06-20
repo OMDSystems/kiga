@@ -28,7 +28,7 @@ public class Children extends SuperKiGaController {
   
 
   public static void index() {
-    Collection<IChildData> children = getCustomermanagement().getAllChildren();
+    Collection<IChildData> children = getChildStowage().getAllChildren();
     //renderTemplate("Children/list.json", children);
     render(children);
   }
