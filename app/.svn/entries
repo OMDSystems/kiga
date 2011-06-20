@@ -4,7 +4,7 @@ dir
 43
 https://kiga.svn.sourceforge.net/svnroot/kiga/app
 https://kiga.svn.sourceforge.net/svnroot/kiga
-
+replace
 
 
 2011-04-13T15:58:24.967893Z
@@ -29,13 +29,24 @@ maolwi
 buildAndConfigure
 dir
 
+businessLogic
+dir
+
+client
+dir
+
+
+
+add
+
 controllers
 dir
+
+
+
+replace
 
 fassade
-dir
-
-businessLogic
 dir
 
 views

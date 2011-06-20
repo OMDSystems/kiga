@@ -25,6 +25,7 @@ public class BuildAndConfigureSystem extends Job<String> {
   @Override
   public void doJob() {
     buildAndConfigureSystem();
+    TestDataGenerator.makeChildrenForJuerFixe4();
   }
 
   @Override

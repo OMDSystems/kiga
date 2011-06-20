@@ -23,6 +23,22 @@ public class TestDataGenerator {
     
     private TestDataGenerator() {}
     
+    public static void makeChildrenForJuerFixe4(){
+      groupmanagement = BuildAndConfigureSystem.getGroupComponent();
+      customermanagement = BuildAndConfigureSystem.getCustomerComponent();
+      deleteAllData();
+    try {
+      customermanagement.createChild("Marvin", "Ede", new Date(), "none", new AdressType("Foostreet", "12345", "Hamburg", "", "26"));
+      customermanagement.createChild("Oliver", "Willhoeft", new Date(), "none", new AdressType("Foostreet", "12345", "Hamburg", "", "26"));
+      customermanagement.createChild("Dario", "Rexin", new Date(), "none", new AdressType("Foostreet", "12345", "Hamburg", "", "26"));
+      customermanagement.createChild("Stefan", "Sarstedt", new Date(), "none", new AdressType("Foostreet", "12345", "Hamburg", "", "26"));
+    } catch (TechnicalProblemException ex) {
+      Logger.getLogger(TestDataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+    }
+            
+      
+    }
+    
     public static void generateSet1() throws TechnicalProblemException{
         try {
             groupmanagement = BuildAndConfigureSystem.getGroupComponent();

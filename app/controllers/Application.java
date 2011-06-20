@@ -1,13 +1,11 @@
 package controllers;
+import controllers.client.presentation.dataAdapter.SuperKiGaController;
 
-import play.*;
-import play.mvc.*;
 
 import java.util.*;
 
 //import models.*;
 
-import fassade.SuperKiGaController;
 
 public class Application extends SuperKiGaController {
 

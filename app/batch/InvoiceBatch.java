@@ -26,7 +26,7 @@ import play.jobs.On;
 public class InvoiceBatch extends Job{
   
   /** Force batch to be run whenever method is called (for testing) */
-  private boolean alwaysRunBatch = false;
+  private boolean alwaysRunBatch = true;
   
   private final MessageProxy messageProxy;
 

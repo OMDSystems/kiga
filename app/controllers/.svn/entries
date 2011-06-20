@@ -1,18 +1,18 @@
 10
 
 dir
-43
+0
 https://kiga.svn.sourceforge.net/svnroot/kiga/app/controllers
 https://kiga.svn.sourceforge.net/svnroot/kiga
 
 
 
-2011-04-11T17:15:44.752373Z
-1
-maolwi
 
 
 
+
+
+svn:special svn:externals svn:needs-lock
 
 
 
@@ -31,12 +31,9 @@ file
 
 
 
+add
 
-2011-04-12T21:11:02.000000Z
-e99ee5a1b020cc8a246017d6dd2b21f5
-2011-04-11T17:15:44.752373Z
-1
-maolwi
+aa904900b8ab0d19c2cdebff18c58d36
 
 
 
@@ -48,15 +45,14 @@ maolwi
 
 
 
+copied
+https://kiga.svn.sourceforge.net/svnroot/kiga/app/controllers/Application.java
+43
+
+client
+dir
 
 
 
-
-
-
-
-
-
-
-202
+add
 
