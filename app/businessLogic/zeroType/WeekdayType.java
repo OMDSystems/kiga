@@ -6,5 +6,20 @@ package businessLogic.zeroType;
  */
 public enum WeekdayType {
 
-  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY;
+  MONDAY("monday"),
+  TUESDAY("tuesday"),
+  WEDNESDAY("wednesday"),
+  THURSDAY("thursday"),
+  FRIDAY("friday");
+
+  protected final String value;
+
+  @Override
+  public String toString() {
+    return value;
+  }
+
+  WeekdayType(String value) {
+    this.value = value;
+  }
 }

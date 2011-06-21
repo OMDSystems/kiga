@@ -7,3 +7,25 @@ div#main-area {
   float: left;
 }
 
+ul {
+  padding: 0;
+  margin-left: 0;
+  width: 150px;
+  list-style-type: none;
+}
+
+ul li {
+  padding-left: 10px;
+}
+
+ul li a {
+  text-decoration: none;
+}
+
+ul li a:hover {
+  text-decoration: underline;
+}
+
+.bold {
+  font-weight: bold;
+}

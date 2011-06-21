@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+
+<table class="ui-widget ui-widget-content">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Day / Time</th>
+      #{list types, as:'type'}
+      <th>${type}</th>
+      #{/list}
+    </tr>
+  </thead>
+  <tbody>
+    #{list days, as:'day'}
+    <tr>
+      <td>${day}</td>
+      #{list types, as:'type'}
+      <td>
+        <ul>
+        #{list groups[day][type], as:'groupList'}
+          #{list groupList.value, as:'group'}
+          <li>
+            <a href="#">${group.name}</a>
+          </li>
+          #{/list}
+        #{/list}
+        </ul>
+      </td>
+      #{/list}
+    </tr>
+    #{/list}
+  </tbody>
+</table>
