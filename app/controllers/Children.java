@@ -15,22 +15,28 @@ import java.text.SimpleDateFormat;
 
 import controllers.client.presentation.dataAdapter.SuperKiGaController;
 import businessLogic.customerComponent.IChildData;
+import businessLogic.groupComponent.IRoomData;
+import businessLogic.groupComponent.IGroupData;
 import businessLogic.zeroType.TechnicalProblemException;
 import businessLogic.zeroType.AdressType;
+import businessLogic.zeroType.GroupType;
+import businessLogic.zeroType.WeekdayType;
 import businessLogic.zeroType.ChildNotFoundException;
 import client.clientLogic.dataStowage.ChildStowage;
-import controllers.client.presentation.dataAdapter.SuperKiGaController;
-import controllers.client.presentation.dataAdapter.SuperKiGaController;
 import controllers.client.presentation.dataAdapter.converters.ChildConverter;
 import controllers.client.presentation.dataAdapter.converters.DataValidationException;
 import java.text.DateFormat;
 
 public class Children extends SuperKiGaController {
 
-  public static void index() {
+  public static void index() throws Exception {
     Collection<IChildData> children = getChildStowage().getAllChildren();
-    //renderTemplate("Children/list.json", children);
-    render(children);
+    List<GroupType> types = Arrays.asList(GroupType.values());
+    List<WeekdayType> days = Arrays.asList(WeekdayType.values());
+    Map<WeekdayType, Map<GroupType, Map<IRoomData, List<IGroupData>>>> groups
+              = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent()
+                .getAllGroups();
+    render(children, types, days, groups);
   }
 
   private static ChildStowage getChildStowage() {

@@ -7,6 +7,7 @@
 
 #{set 'moreScripts'}
   #{script 'children.js' /}
+  #{script 'assignGroupDialog.js' /}
 #{/set}
 
 <button id="add-child">Add Child</button>
@@ -21,6 +22,7 @@
         <th>Street</th>
         <th>Zip</th>
         <th>City</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -33,10 +35,12 @@
           <td>${child.adress.street} ${child.adress.houseNumber}</td>
           <td>${child.adress.zip}</td>
           <td>${child.adress.town}</td>
+          <td><a href="javascript:openAssignGroupDialog(${child.id});">Assign Group</a></td>
         </tr>
       #{/list}
     </tbody>
   </table>
 </div>
 #{include 'Children/form.html' /}
+#{include 'Children/assign_group_dialog.html' /}
 

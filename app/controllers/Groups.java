@@ -19,8 +19,10 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 import controllers.client.presentation.dataAdapter.SuperKiGaController;
+import businessLogic.customerComponent.IChildData;
 import businessLogic.groupComponent.IGroupData;
 import businessLogic.zeroType.TechnicalProblemException;
+import businessLogic.zeroType.AdressType;
 
 public class Groups extends SuperKiGaController {
 
@@ -42,6 +44,14 @@ public class Groups extends SuperKiGaController {
   }
 
   public static void show(long id) {
+    Collection<IChildData> children = buildAndConfigure.BuildAndConfigureSystem.getCustomerComponent().getAllChildren();
+    renderJSON(children);
+  }
+
+  public static void createRandom() throws Exception {
+    long roomId = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent().createRoom("Darkroom", 10);
+    long groupId = buildAndConfigure.BuildAndConfigureSystem.getGroupComponent().createGroup(GroupType.LATE, WeekdayType.WEDNESDAY, 23, "Gonzo Gang", roomId);
+    //long childId = buildAndConfigure.BuildAndConfigureSystem.getCustomerComponent().createChild("Tom", "Kauschat", new Date(), "none", new AdressType("Sesams", "012345", "Hamburg", "", "17"));
   }
 
   public static void create() {

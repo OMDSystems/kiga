@@ -1,5 +1,10 @@
 #{extends 'main.html' /}
 
+#{set 'moreScripts'}
+  #{script 'groups.js' /}
+  #{script 'groupDialog.js' /}
+#{/set}
+
 <table class="ui-widget ui-widget-content">
   <thead>
     <tr class="ui-widget-header">
@@ -19,7 +24,7 @@
         #{list groups[day][type], as:'groupList'}
           #{list groupList.value, as:'group'}
           <li>
-            <a href="#">${group.name}</a>
+            <a href="javascript:detailView(${group.id});">${group.name}</a>
           </li>
           #{/list}
         #{/list}
@@ -30,3 +35,5 @@
     #{/list}
   </tbody>
 </table>
+
+#{include 'Groups/group_dialog.html' /}

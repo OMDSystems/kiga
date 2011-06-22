@@ -10,8 +10,10 @@ GET     /check                                  Application.check
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+GET     /groups/createRandom                    Groups.createRandom
+
 GET     /{controller}(/(index)?)?               {controller}.index
-GET     /{controller}/{id}                      {controller}.show({id})
+GET     /{controller}/(show/)?{id}              {controller}.show({id})
 POST    /{controller}/?                         {controller}.create
 PUT     /{controller}/?                         {controller}.update
 DELETE  /{controller}/{id}                      {controller}.delete({id})
