@@ -4,6 +4,7 @@ import businessLogic.customerComponent.CustomerComponent;
 import businessLogic.customerComponent.ICustomermanagement;
 import businessLogic.groupComponent.GroupComponent;
 import businessLogic.groupComponent.IGroupmanagement;
+import controllers.client.presentation.dataAdapter.Localizer;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import rightsManagementProxy.IRights;
@@ -35,11 +36,15 @@ public class BuildAndConfigureSystem extends Job<String> {
   }
 
   public static void buildAndConfigureSystem() {
+    //build
     groupComponent = GroupComponent.createComponent();
     customerComponent = CustomerComponent.createComponent(groupComponent);
     RightsComponent rightsComponent = RightsComponent.createComponent();
     rights = rightsComponent;
     rightsAdministration = rightsComponent;
+    
+    //configure
+    setLocale(Localizer.Locales.GERMAN);
   }
 
   /**
@@ -72,5 +77,9 @@ public class BuildAndConfigureSystem extends Job<String> {
    */
   public static IRightsAdministration getRightsAdministration() {
     return rightsAdministration;
+  }
+
+  private static void setLocale(Localizer.Locales locale) {
+    Localizer.setLocale(locale);
   }
 }
