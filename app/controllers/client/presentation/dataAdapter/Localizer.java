@@ -30,7 +30,7 @@ public class Localizer {
 
   public static void parseXML() {
     try {
-      File xmlFile = new File("conf/localize.xml");
+      File xmlFile = new File("kiga/conf/localize.xml");
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       document = dBuilder.parse(xmlFile);
@@ -47,6 +47,10 @@ public class Localizer {
 
   public static void setLocale(Locales locale) {
     Localizer.locale = locale;
+  }
+  
+  public static Localizer.Locales getLocale(){
+    return locale;
   }
 
   public static String localize(String text) {

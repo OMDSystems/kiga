@@ -22,22 +22,22 @@ import client.clientLogic.dataStowage.ChildStowage;
 import controllers.client.presentation.dataAdapter.SuperKiGaController;
 import controllers.client.presentation.dataAdapter.SuperKiGaController;
 import controllers.client.presentation.dataAdapter.converters.ChildConverter;
+import controllers.client.presentation.dataAdapter.converters.DataValidationException;
 import java.text.DateFormat;
 
 public class Children extends SuperKiGaController {
-  
 
   public static void index() {
     Collection<IChildData> children = getChildStowage().getAllChildren();
     //renderTemplate("Children/list.json", children);
     render(children);
   }
-  
-  private static ChildStowage getChildStowage(){
+
+  private static ChildStowage getChildStowage() {
     return ChildStowage.getInstance();
   }
-  
-  private static ChildConverter getChildConverter(){
+
+  private static ChildConverter getChildConverter() {
     return ChildConverter.getInstance();
   }
 
@@ -45,9 +45,9 @@ public class Children extends SuperKiGaController {
     try {
       IChildData child = getChildStowage().getChildData(id);
       renderJSON(child);
-    } catch(TechnicalProblemException e) {
+    } catch (TechnicalProblemException e) {
       error();
-    } catch(ChildNotFoundException ex){
+    } catch (ChildNotFoundException ex) {
       notFound();
     }
   }
@@ -57,8 +57,9 @@ public class Children extends SuperKiGaController {
       IChildData playChildData = getChildConverter().convertPlayChildDataToIChildData(params);
       getChildStowage().createChild(playChildData);
       ok();
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+    } catch (DataValidationException ex) {
+      badRequest();
+    } catch (Exception ex) {
       error();
     }
   }
