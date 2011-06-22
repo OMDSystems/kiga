@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : localize.xml
+    Created on : 20. Juni 2011, 19:24
+    Author     : Marvin
+    Description:
+        Holding translations for Strings
+-->
+
+<root>
+  
+  <street>
+    <german>Straße</german>
+    <foo>Foo</foo>
+  </street>
+  
+  <lastname>
+    <german>Nachname</german>
+    <foo>Foo</foo>
+  </lastname>
+  
+  <addchild>
+    <german>Kind anlegen</german>
+    <foo>foo</foo>
+  </addchild>
+  
+  <dateofbirth>
+    <german>Geburtstag</german>
+    <foo>foo</foo>
+  </dateofbirth>
+  
+  <allergies>
+    <german>Allergien</german>  
+  </allergies>
+  
+  <zip>
+    <german>PLZ</german>
+  </zip>
+  
+  <city>
+    <german>Stadt</german>  
+  </city>
+  
+  <children>
+    <german>Kinder</german>  
+  </children>
+ 
+  <groups>
+    <german>Gruppen</german>
+    <foo>fOo</foo>
+  </groups>
+  
+
+</root>
